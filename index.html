@@ -25,27 +25,27 @@ main{padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140
 .slot .nm{font-size:13px;font-weight:bold}
 .card{width:100%;aspect-ratio:63/88;position:relative;perspective:900px;cursor:pointer}
 .inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s}
-.face{position:absolute;inset:0;border-radius:6%/4.3%;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;padding:5%;background:var(--fc);box-shadow:0 6px 18px #7a5fc044}
-.face img{width:100%;height:100%;object-fit:cover;border-radius:4%/3%;display:block}
-.holo{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color-dodge;opacity:.5;background:repeating-linear-gradient(110deg,#ff6f9f 0%,#ffd36f 6%,#7dff9e 12%,#6fd3ff 18%,#b77dff 24%,#ff6f9f 30%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
-.shine{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,255,255,.8),rgba(255,255,255,0) 45%);mix-blend-mode:overlay}
+.face{position:absolute;inset:0;border-radius:6%/4.3%;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;box-shadow:0 6px 18px #7a5fc044}.face.back{background:linear-gradient(160deg,#fff,#f6efff)}
+.face img{width:100%;height:100%;object-fit:cover;display:block}
+.holo{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color-dodge;opacity:.25;background:repeating-linear-gradient(110deg,#ff6f9f 0%,#ffd36f 6%,#7dff9e 12%,#6fd3ff 18%,#b77dff 24%,#ff6f9f 30%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
+.shine{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,255,255,.4),rgba(255,255,255,0) 45%);mix-blend-mode:overlay}
 .glit{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#fff 1px,transparent 1.5px);background-size:23px 29px,37px 31px;background-position:0 0,11px 13px;animation:tw 2.4s infinite alternate}
 /* キラキラの種類 */
 .fx-none .holo,.fx-none .glit,.fx-none .shine{display:none}
-.fx-rainbow .holo{mix-blend-mode:color-dodge;opacity:.55;background:repeating-linear-gradient(100deg,#ff3b6b 0 6px,#ff9f1c 6px 12px,#ffe600 12px 18px,#2ee66b 18px 24px,#1fb6ff 24px 30px,#7b5cff 30px 36px);background-size:200% 200%;background-position:var(--px,50%) var(--py,50%);filter:saturate(1.3)}
+.fx-rainbow .holo{mix-blend-mode:color-dodge;opacity:.28;background:repeating-linear-gradient(100deg,#ff3b6b 0 6px,#ff9f1c 6px 12px,#ffe600 12px 18px,#2ee66b 18px 24px,#1fb6ff 24px 30px,#7b5cff 30px 36px);background-size:200% 200%;background-position:var(--px,50%) var(--py,50%);filter:saturate(1.15)}
 .fx-rainbow .glit{display:none}
-.fx-galaxy .holo{mix-blend-mode:screen;opacity:.75;background:radial-gradient(ellipse at var(--px,50%) var(--py,50%),rgba(180,120,255,.55),rgba(40,20,120,.35) 40%,rgba(10,0,40,.25) 75%),linear-gradient(130deg,rgba(255,80,200,.3),rgba(60,140,255,.3));background-size:auto}
+.fx-galaxy .holo{mix-blend-mode:screen;opacity:.38;background:radial-gradient(ellipse at var(--px,50%) var(--py,50%),rgba(180,120,255,.28),rgba(40,20,120,.18) 40%,rgba(10,0,40,.12) 75%),linear-gradient(130deg,rgba(255,80,200,.15),rgba(60,140,255,.15));background-size:auto}
 .fx-galaxy .glit{mix-blend-mode:screen;background-image:radial-gradient(#fff 1.2px,transparent 1.8px),radial-gradient(#ffe9a8 .8px,transparent 1.3px),radial-gradient(#b9d8ff 1px,transparent 1.6px);background-size:41px 47px,19px 23px,31px 37px;background-position:calc(var(--px,50%)*.4) calc(var(--py,50%)*.4),calc(var(--px,50%)*-.6) 7px,13px calc(var(--py,50%)*.8);animation:tw 1.6s infinite alternate}
 .fx-shine .holo,.fx-shine .glit{display:none}
-.fx-shine .shine{mix-blend-mode:soft-light;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.85) 48%,rgba(255,255,255,.95) 50%,rgba(255,255,255,.85) 52%,transparent 70%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
-.fx-lame .holo{opacity:.3;background-size:600% 600%}
-.fx-lame .glit{mix-blend-mode:color-dodge;opacity:.9;background-image:radial-gradient(#fff .6px,transparent 1px),radial-gradient(#ffd6f0 .6px,transparent 1px),radial-gradient(#d6f4ff .6px,transparent 1px),radial-gradient(#fff6c8 .5px,transparent .9px);background-size:7px 9px,11px 8px,9px 13px,5px 6px;background-position:calc(var(--px,50%)*.3) 0,3px calc(var(--py,50%)*.3),calc(var(--px,50%)*-.2) 5px,1px 2px;animation:tw .9s infinite alternate}
-.fx-aurora .holo{mix-blend-mode:soft-light;opacity:.9;background:linear-gradient(160deg,#ffd1ec,#c9f0ff 25%,#d9ffe8 45%,#efd9ff 65%,#fff2c9 85%,#ffd1ec);background-size:250% 250%;background-position:var(--px,50%) var(--py,50%);filter:blur(2px)}
-.fx-aurora .glit{opacity:.25;animation:none;background-size:29px 33px,43px 37px}
-.fx-aurora .shine{background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,240,255,.7),transparent 55%)}
+.fx-shine .shine{mix-blend-mode:soft-light;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.42) 48%,rgba(255,255,255,.48) 50%,rgba(255,255,255,.42) 52%,transparent 70%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
+.fx-lame .holo{opacity:.15;background-size:600% 600%}
+.fx-lame .glit{mix-blend-mode:color-dodge;opacity:.45;background-image:radial-gradient(#fff .6px,transparent 1px),radial-gradient(#ffd6f0 .6px,transparent 1px),radial-gradient(#d6f4ff .6px,transparent 1px),radial-gradient(#fff6c8 .5px,transparent .9px);background-size:7px 9px,11px 8px,9px 13px,5px 6px;background-position:calc(var(--px,50%)*.3) 0,3px calc(var(--py,50%)*.3),calc(var(--px,50%)*-.2) 5px,1px 2px;animation:tw .9s infinite alternate}
+.fx-aurora .holo{mix-blend-mode:soft-light;opacity:.45;background:linear-gradient(160deg,#ffd1ec,#c9f0ff 25%,#d9ffe8 45%,#efd9ff 65%,#fff2c9 85%,#ffd1ec);background-size:250% 250%;background-position:var(--px,50%) var(--py,50%);filter:blur(2px)}
+.fx-aurora .glit{opacity:.12;animation:none;background-size:29px 33px,43px 37px}
+.fx-aurora .shine{background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,240,255,.35),transparent 55%)}
 .fxsel{display:flex;gap:10px;align-items:center}.fxsel select{flex:1}
-.fxsw{width:46px;aspect-ratio:63/88;position:relative;flex:none}.fxsw .face{padding:8%}.fxsw .base{width:100%;height:100%;border-radius:4%/3%;background:linear-gradient(160deg,#ffb3d1,#b8a6ff)}
-@keyframes tw{0%{opacity:.15;filter:hue-rotate(0)}100%{opacity:.7;filter:hue-rotate(90deg)}}
+.fxsw{width:46px;aspect-ratio:63/88;position:relative;flex:none}.fxsw .base{width:100%;height:100%;background:linear-gradient(160deg,#ffb3d1,#b8a6ff)}
+@keyframes tw{0%{opacity:.08;filter:hue-rotate(0)}100%{opacity:.35;filter:hue-rotate(90deg)}}
 .back{transform:rotateY(180deg)}
 .backin{height:100%;border-radius:4%/3%;background:linear-gradient(160deg,#fff,#f6efff);padding:10%;font-size:12px;display:flex;flex-direction:column;gap:6px;overflow:auto;position:relative;z-index:1}
 .backin b{font-size:1.4em;color:#8a5cff}.backin .lb{font-size:.8em;opacity:.6}
@@ -54,15 +54,12 @@ main{padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140
 #full{position:fixed;inset:0;z-index:50;background:rgba(40,25,70,.88);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;touch-action:none}
 #full.on{display:flex}
 #full .card{width:min(78vw,calc(70vh*63/88));cursor:grab;perspective:1400px}
-#full .inner{transition:none}#full .face{font-size:16px}#full .holo{opacity:.7}
+#full .inner{transition:none}#full .face{font-size:16px}#full .holo{opacity:.35}
 .hint{color:#fff;font-size:13px;opacity:.8}
 dialog{border:none;border-radius:20px;padding:18px;width:min(92vw,420px);box-shadow:0 10px 40px #6a4fb055}
 dialog::backdrop{background:#3a2a5a88}
 dialog label{display:block;font-size:13px;margin:8px 0 3px}
 dialog input,dialog textarea{width:100%;padding:8px;border:2px solid #eadfff;border-radius:12px;font:inherit}
-.colors{display:flex;gap:6px;flex-wrap:wrap}
-.colors span{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px #ccc}
-.colors span.sel{box-shadow:0 0 0 3px #8a5cff}
 .prev{width:80px;aspect-ratio:63/88;object-fit:cover;border-radius:8px}
 .tabs{display:flex;gap:6px;margin-bottom:8px}.tabs button{padding:6px 16px}.tabs button.on{background:linear-gradient(90deg,#ff8fc0,#a58cff);color:#fff;font-weight:bold}
 body.v-osu #albumbar,body.v-osu #grid{display:none}body:not(.v-osu) #osu{display:none}
@@ -109,15 +106,12 @@ body.v-osu #persistst{display:none}
 <label>入手元メモ（例：X、Instagram）</label><input name="source">
 <label>自由メモ</label><textarea name="memo" rows="3"></textarea>
 <label>キラキラの種類</label><div class="fxsel"><select name="fx" id="fxs"></select><div class="fxsw" id="fxsw"><div class="face front"><div class="base"></div><div class="holo"></div><div class="glit"></div><div class="shine"></div></div></div></div>
-<label>フレームカラー</label><div class="colors" id="colors"></div>
 <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button value="cancel" formnovalidate>キャンセル</button><button value="ok" class="primary" id="okb">保存</button></div>
 </form></dialog>
 <div id="bktoast" role="status"><span class="msg">そろそろバックアップしとく？</span><div class="btns"><button type="button" id="bknow" class="primary">今すぐ保存</button><button type="button" id="bklater">あとで</button></div></div>
 <script>
-const COLORS=[['','ホロシルバー'],['#ff5c8a','ピンク'],['#ff9a3c','オレンジ'],['#ffd93c','イエロー'],['#4cd38a','グリーン'],['#4cb8ff','ブルー'],['#9b6bff','パープル'],['#ff4d4d','レッド'],['#ffffff','ホワイト'],['#333344','ブラック']];
 const FX=[['holo','今のホロ'],['rainbow','レインボー'],['galaxy','ギャラクシー'],['shine','シャイン'],['lame','ラメ'],['aurora','オーロラ（パステル）'],['none','なし']];
 const fxOf=c=>FX.some(f=>f[0]===c.fx)?c.fx:'holo';
-const fcBg=c=>c?`linear-gradient(135deg,${c},#fff 45%,${c} 70%,#fff)`:'linear-gradient(135deg,#d8d8e4,#fff,#b8bccc,#f4f4fa,#a9aec0)';
 const OSU_DEFAULT={"title": "IVE 最新ショット（LooksCanKill）", "updated": "2026-11-04", "items": [{"postUrl": "https://x.com/IVEstarship/status/2117240310698762328", "imageUrl": "https://pbs.twimg.com/media/HWHwZjvaEAA7d6u.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill (1/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2117240310698762328", "imageUrl": "https://pbs.twimg.com/media/HWHwZjpb0AAmegV.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill (2/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2117240311332110722", "imageUrl": "https://pbs.twimg.com/media/HWHwZj2a0AAtUYI.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill"}, {"postUrl": "https://x.com/IVEstarship/status/2116809199078478066", "imageUrl": "https://pbs.twimg.com/media/HWBqvsbbsAAkvSA.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-01", "note": "SBS 人気歌謡 #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116442834790478003", "imageUrl": "https://pbs.twimg.com/media/HV8dibGbcAAz_IP.jpg?name=large", "group": "IVE", "member": "", "date": "2026-10-31", "note": "MBC ショー！音楽中心 #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116106241001087000", "imageUrl": "https://pbs.twimg.com/media/HV3raNNbYAAdlGW.jpg?name=large", "group": "IVE", "member": "", "date": "2026-10-30", "note": "KBS2 ミュージックバンク #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116159434590413225", "imageUrl": "https://pbs.twimg.com/media/HV4ZyAQbkAAHmZa.jpg?name=large", "group": "IVE", "member": "LIZ", "date": "2026-10-30", "note": "モモクTV (1/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2116159434590413225", "imageUrl": "https://pbs.twimg.com/media/HV4ZyAMb0AATPbr.jpg?name=large", "group": "IVE", "member": "LIZ", "date": "2026-10-30", "note": "モモクTV (2/2)"}]};
 let db,cards=[],osu=null;
 function openDB(){return new Promise((r,j)=>{const q=indexedDB.open('oshi-toreka',2);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('cards'))d.createObjectStore('cards',{keyPath:'id'});if(!d.objectStoreNames.contains('osusume'))d.createObjectStore('osusume')};q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error)})}
@@ -125,7 +119,7 @@ const tx=(m,f)=>new Promise((r,j)=>{const t=db.transaction('cards',m);const q=f(
 const getAll=()=>tx('readonly',s=>s.getAll()),put=c=>tx('readwrite',s=>s.put(c)),del=id=>tx('readwrite',s=>s.delete(id));
 function resize(file){return new Promise((r,j)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const k=Math.min(1,1200/Math.max(i.width,i.height));const c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.85))};i.onerror=j;i.src=u})}
 const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function cardHTML(c){const bg=fcBg(c.color);return `<div class="inner"><div class="face front fx-${fxOf(c)}" style="--fc:${bg}"><img src="${c.img}" alt=""><div class="holo"></div><div class="glit"></div><div class="shine"></div></div><div class="face back" style="--fc:${bg}"><div class="backin"><b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">入手元</span><span>${esc(c.source)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="holo" style="opacity:.25"></div><div class="shine"></div></div></div>`}
+function cardHTML(c){return `<div class="inner"><div class="face front fx-${fxOf(c)}"><img src="${c.img}" alt=""><div class="holo"></div><div class="glit"></div><div class="shine"></div></div><div class="face back"><div class="backin"><b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">入手元</span><span>${esc(c.source)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="holo" style="opacity:.12"></div><div class="shine"></div></div></div>`}
 function render(){const f=filter.value,so=sort.value;
 const ms=[...new Set(cards.map(c=>c.member).filter(Boolean))].sort();
 filter.innerHTML='<option value="">全メンバー</option>'+ms.map(m=>`<option ${m===f?'selected':''}>${esc(m)}</option>`).join('');
@@ -139,18 +133,17 @@ s.querySelector('[data-a=e]').onclick=()=>edit(c);
 s.querySelector('[data-a=d]').onclick=async()=>{if(confirm('このカードを削除しますか？')){await del(c.id);cards=cards.filter(x=>x!==c);render();renderOsu()}};grid.appendChild(s)}}
 function setLight(el,x,y){el.style.setProperty('--px',(x*100).toFixed(1)+'%');el.style.setProperty('--py',(y*100).toFixed(1)+'%')}
 function hover(cd){const inn=cd.querySelector('.inner');cd.addEventListener('pointermove',e=>{const r=cd.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;setLight(cd,x,y);inn.style.transform=`rotateY(${(x-.5)*20}deg) rotateX(${(.5-y)*20}deg)`});cd.addEventListener('pointerleave',()=>{inn.style.transform='';setLight(cd,.5,.5)})}
-function pickColor(cur){colors.innerHTML='';COLORS.forEach(([c,n])=>{const s=document.createElement('span');s.title=n;s.style.background=fcBg(c);if(c===cur)s.classList.add('sel');s.onclick=()=>{[...colors.children].forEach(x=>x.classList.remove('sel'));s.classList.add('sel');form.dataset.color=c};colors.appendChild(s)});form.dataset.color=cur||''}
-function pickFx(v){fxs.innerHTML=FX.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');fxs.value=v;const sw=fxsw.querySelector('.face'),u=()=>{sw.className='face front fx-'+fxs.value};fxs.onchange=u;u();fxsw.style.setProperty('--fc',fcBg(form.dataset.color||''))}
+function pickFx(v){fxs.innerHTML=FX.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');fxs.value=v;const sw=fxsw.querySelector('.face'),u=()=>{sw.className='face front fx-'+fxs.value};fxs.onchange=u;u()}
 fxsw.addEventListener('pointermove',e=>{const r=fxsw.getBoundingClientRect();setLight(fxsw,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)});
 let fxT=0;setInterval(()=>{if(!dlg.open)return;fxT+=.05;setLight(fxsw,.5+Math.sin(fxT)*.45,.5+Math.cos(fxT*.7)*.45)},50);
-function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;dprev.src=c.img;for(const k of['member','date','source','memo'])form[k].value=c[k]||'';pickColor(c.color);pickFx(fxOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','source','memo'])c[k]=form[k].value.trim();c.color=form.dataset.color;c.fx=fxs.value;r(true)}})}
+function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;dprev.src=c.img;for(const k of['member','date','source','memo'])form[k].value=c[k]||'';pickFx(fxOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','source','memo'])c[k]=form[k].value.trim();c.fx=fxs.value;r(true)}})}
 async function edit(c){if(await askInfo(c,'カードを編集')){await put(c);render()}}
 file.onchange=async()=>{const fs=[...file.files];file.value='';const last=cards.slice().sort((a,b)=>b.created-a.created)[0];
 for(let i=0;i<fs.length;i++){const c={id:Date.now().toString(36)+Math.random().toString(36).slice(2),created:Date.now(),img:await resize(fs[i]),member:last?last.member:'',date:new Date().toISOString().slice(0,10),source:'',memo:'',color:last?last.color:'',fx:last?fxOf(last):'holo'};
 if(await askInfo(c,`新しいカード (${i+1}/${fs.length})`)){c.dh=await dhashURL(c.img);await put(c);cards.push(c);render()}}};
 // fullscreen: free drag rotate with inertia
 let rx=0,ry=0,vx=0,vy=0,drag=false,lx,ly,moved=0,flip=false,raf,tiltX=0,tiltY=0;
-function openFull(c){fcard.innerHTML=cardHTML(c);rx=ry=vx=vy=0;flip=false;full.classList.add('on');cancelAnimationFrame(raf);loop()}
+function openFull(c){fcard.innerHTML=cardHTML(c);rx=ry=vx=vy=0;flip=false;full.classList.add('on');cancelAnimationFrame(raf);enableTilt();loop()}
 function closeFull(){full.classList.remove('on');cancelAnimationFrame(raf)}
 function loop(){if(!drag){ry+=vy;rx+=vx;vx*=.95;vy*=.95;if(Math.abs(vx)+Math.abs(vy)<.3){rx*=.95;const t=flip?180:0,d=((ry-t)%360+540)%360-180;ry-=d*.06}}
 const R=ry+tiltY,X=rx+tiltX;fcard.querySelector('.inner').style.transform=`rotateX(${X}deg) rotateY(${R}deg)`;
@@ -162,7 +155,7 @@ function doFlip(){flip=!flip;vx=vy=0}
 fflip.onclick=doFlip;fclose.onclick=closeFull;full.addEventListener('click',e=>{if(e.target===full)closeFull()});
 addEventListener('keydown',e=>{if(e.key==='Escape')closeFull()});
 function onTilt(e){if(e.beta==null)return;tiltX=Math.max(-25,Math.min(25,(e.beta-45)*.5));tiltY=Math.max(-25,Math.min(25,e.gamma*.5));document.querySelectorAll('#grid .card').forEach(cd=>setLight(cd,.5+tiltY/50,.5+tiltX/50))}
-function enableTilt(){try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function')DeviceOrientationEvent.requestPermission().then(p=>{if(p==='granted')addEventListener('deviceorientation',onTilt)}).catch(()=>{});else if(window.DeviceOrientationEvent)addEventListener('deviceorientation',onTilt)}catch(e){}}
+let tiltReady=0;function enableTilt(){if(tiltReady)return;tiltReady=1;try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function')DeviceOrientationEvent.requestPermission().then(p=>{if(p==='granted')addEventListener('deviceorientation',onTilt);else tiltReady=0}).catch(()=>{tiltReady=0});else if(window.DeviceOrientationEvent)addEventListener('deviceorientation',onTilt);else tiltReady=0}catch(e){tiltReady=0}}
 addEventListener('pointerdown',function once(){removeEventListener('pointerdown',once);enableTilt()});
 const BK_KEY='oshi-toreka-bk';
 function bkMeta(){try{return JSON.parse(localStorage.getItem(BK_KEY)||'{}')}catch(e){return {}}}
