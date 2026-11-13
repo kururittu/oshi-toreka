@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>推しトレカアルバム</title>
+<meta name="theme-color" content="#ff8fc0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="推しトレカ">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:"Hiragino Maru Gothic ProN","Rounded Mplus 1c",system-ui,sans-serif;background:linear-gradient(160deg,#fdf2ff,#eef6ff 50%,#fff7ec);color:#4a3f5c;min-height:100vh}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.8);backdrop-filter:blur(10px);padding:12px 14px;box-shadow:0 2px 12px #c9b6ff33}
+h1{margin:0 0 8px;font-size:20px;background:linear-gradient(90deg,#ff7eb3,#9b8cff,#5ec8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button,select,.btn{border:none;border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;background:#fff;color:#5b4b7a;box-shadow:0 2px 6px #b9a6e055;cursor:pointer}
+.primary{background:linear-gradient(90deg,#ff8fc0,#a58cff);color:#fff;font-weight:bold}
+.count{margin-left:auto;font-weight:bold;background:#fff;border-radius:999px;padding:6px 12px;box-shadow:0 2px 6px #b9a6e055}
+main{padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;max-width:1100px;margin:auto}
+.empty{grid-column:1/-1;text-align:center;opacity:.7;padding:60px 0}
+.slot{display:flex;flex-direction:column;gap:6px;align-items:center}
+.slot .nm{font-size:13px;font-weight:bold}
+.card{width:100%;aspect-ratio:63/88;position:relative;perspective:900px;cursor:pointer}
+.inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s}
+.face{position:absolute;inset:0;border-radius:6%/4.3%;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;padding:5%;background:var(--fc);box-shadow:0 6px 18px #7a5fc044}
+.face img{width:100%;height:100%;object-fit:cover;border-radius:4%/3%;display:block}
+.holo{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color-dodge;opacity:.5;background:repeating-linear-gradient(110deg,#ff6f9f 0%,#ffd36f 6%,#7dff9e 12%,#6fd3ff 18%,#b77dff 24%,#ff6f9f 30%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
+.shine{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,255,255,.8),rgba(255,255,255,0) 45%);mix-blend-mode:overlay}
+.glit{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(#fff 1px,transparent 1.5px);background-size:23px 29px,37px 31px;background-position:0 0,11px 13px;animation:tw 2.4s infinite alternate}
+/* キラキラの種類 */
+.fx-none .holo,.fx-none .glit,.fx-none .shine{display:none}
+.fx-rainbow .holo{mix-blend-mode:color-dodge;opacity:.55;background:repeating-linear-gradient(100deg,#ff3b6b 0 6px,#ff9f1c 6px 12px,#ffe600 12px 18px,#2ee66b 18px 24px,#1fb6ff 24px 30px,#7b5cff 30px 36px);background-size:200% 200%;background-position:var(--px,50%) var(--py,50%);filter:saturate(1.3)}
+.fx-rainbow .glit{display:none}
+.fx-galaxy .holo{mix-blend-mode:screen;opacity:.75;background:radial-gradient(ellipse at var(--px,50%) var(--py,50%),rgba(180,120,255,.55),rgba(40,20,120,.35) 40%,rgba(10,0,40,.25) 75%),linear-gradient(130deg,rgba(255,80,200,.3),rgba(60,140,255,.3));background-size:auto}
+.fx-galaxy .glit{mix-blend-mode:screen;background-image:radial-gradient(#fff 1.2px,transparent 1.8px),radial-gradient(#ffe9a8 .8px,transparent 1.3px),radial-gradient(#b9d8ff 1px,transparent 1.6px);background-size:41px 47px,19px 23px,31px 37px;background-position:calc(var(--px,50%)*.4) calc(var(--py,50%)*.4),calc(var(--px,50%)*-.6) 7px,13px calc(var(--py,50%)*.8);animation:tw 1.6s infinite alternate}
+.fx-shine .holo,.fx-shine .glit{display:none}
+.fx-shine .shine{mix-blend-mode:soft-light;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.85) 48%,rgba(255,255,255,.95) 50%,rgba(255,255,255,.85) 52%,transparent 70%);background-size:300% 300%;background-position:var(--px,50%) var(--py,50%)}
+.fx-lame .holo{opacity:.3;background-size:600% 600%}
+.fx-lame .glit{mix-blend-mode:color-dodge;opacity:.9;background-image:radial-gradient(#fff .6px,transparent 1px),radial-gradient(#ffd6f0 .6px,transparent 1px),radial-gradient(#d6f4ff .6px,transparent 1px),radial-gradient(#fff6c8 .5px,transparent .9px);background-size:7px 9px,11px 8px,9px 13px,5px 6px;background-position:calc(var(--px,50%)*.3) 0,3px calc(var(--py,50%)*.3),calc(var(--px,50%)*-.2) 5px,1px 2px;animation:tw .9s infinite alternate}
+.fx-aurora .holo{mix-blend-mode:soft-light;opacity:.9;background:linear-gradient(160deg,#ffd1ec,#c9f0ff 25%,#d9ffe8 45%,#efd9ff 65%,#fff2c9 85%,#ffd1ec);background-size:250% 250%;background-position:var(--px,50%) var(--py,50%);filter:blur(2px)}
+.fx-aurora .glit{opacity:.25;animation:none;background-size:29px 33px,43px 37px}
+.fx-aurora .shine{background:radial-gradient(circle at var(--px,50%) var(--py,30%),rgba(255,240,255,.7),transparent 55%)}
+.fxsel{display:flex;gap:10px;align-items:center}.fxsel select{flex:1}
+.fxsw{width:46px;aspect-ratio:63/88;position:relative;flex:none}.fxsw .face{padding:8%}.fxsw .base{width:100%;height:100%;border-radius:4%/3%;background:linear-gradient(160deg,#ffb3d1,#b8a6ff)}
+@keyframes tw{0%{opacity:.15;filter:hue-rotate(0)}100%{opacity:.7;filter:hue-rotate(90deg)}}
+.back{transform:rotateY(180deg)}
+.backin{height:100%;border-radius:4%/3%;background:linear-gradient(160deg,#fff,#f6efff);padding:10%;font-size:12px;display:flex;flex-direction:column;gap:6px;overflow:auto;position:relative;z-index:1}
+.backin b{font-size:1.4em;color:#8a5cff}.backin .lb{font-size:.8em;opacity:.6}
+.backin .memo{white-space:pre-wrap;word-break:break-all}
+.tools{display:flex;gap:6px}.tools button{padding:4px 10px;font-size:12px}
+#full{position:fixed;inset:0;z-index:50;background:rgba(40,25,70,.88);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;touch-action:none}
+#full.on{display:flex}
+#full .card{width:min(78vw,calc(70vh*63/88));cursor:grab;perspective:1400px}
+#full .inner{transition:none}#full .face{font-size:16px}#full .holo{opacity:.7}
+.hint{color:#fff;font-size:13px;opacity:.8}
+dialog{border:none;border-radius:20px;padding:18px;width:min(92vw,420px);box-shadow:0 10px 40px #6a4fb055}
+dialog::backdrop{background:#3a2a5a88}
+dialog label{display:block;font-size:13px;margin:8px 0 3px}
+dialog input,dialog textarea{width:100%;padding:8px;border:2px solid #eadfff;border-radius:12px;font:inherit}
+.colors{display:flex;gap:6px;flex-wrap:wrap}
+.colors span{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px #ccc}
+.colors span.sel{box-shadow:0 0 0 3px #8a5cff}
+.prev{width:80px;aspect-ratio:63/88;object-fit:cover;border-radius:8px}
+.tabs{display:flex;gap:6px;margin-bottom:8px}.tabs button{padding:6px 16px}.tabs button.on{background:linear-gradient(90deg,#ff8fc0,#a58cff);color:#fff;font-weight:bold}
+body.v-osu #albumbar,body.v-osu #grid{display:none}body:not(.v-osu) #osu{display:none}
+#osu{max-width:1100px;margin:auto;padding:12px 16px 30px}
+.onote{background:#fff8;border:2px dashed #e6d6ff;border-radius:14px;padding:8px 12px;font-size:12.5px;line-height:1.6;margin:8px 0}
+.ohead{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.ohead b{font-size:15px}.ohead small{opacity:.7;font-size:12px}
+#ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;margin-top:10px}
+.otile{display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px #7a5fc033;text-decoration:none;color:inherit}
+.otile .ph{aspect-ratio:3/4;background:linear-gradient(160deg,#f6efff,#eaf4ff);position:relative}
+.otile img{width:100%;height:100%;object-fit:cover;display:block}
+.otile .ph.ng{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;text-align:center;padding:10px;color:#8a7aa8}
+.otile .ph.ng span{font-size:28px}.otile .ph.ng u{color:#8a5cff;font-weight:bold}
+.x{padding:6px 9px 8px;font-size:12px;line-height:1.45}.otile .cap b{color:#8a5cff}.otile .cap i{display:block;font-style:normal;opacity:.65;font-size:11px}
+#bktoast{position:fixed;left:12px;right:12px;bottom:max(16px,env(safe-area-inset-bottom));z-index:40;display:none;flex-direction:column;align-items:stretch;gap:10px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:18px;padding:12px 14px;box-shadow:0 8px 28px #7a5fc044;font-size:14px}
+#bktoast.on{display:flex}
+#bktoast .msg{font-weight:bold;color:#5b4b7a;line-height:1.5}
+#bktoast .btns{display:flex;gap:8px;justify-content:flex-end}
+.persistst{width:100%;margin:6px 0 0;font-size:11px;opacity:.6;line-height:1.4}
+body.v-osu #persistst{display:none}
+
+</style></head><body>
+<header><h1>✨ 推しトレカアルバム</h1>
+<div class="tabs"><button id="tabA" class="on">アルバム</button><button id="tabO">おすすめ</button></div>
+<div class="bar" id="albumbar">
+<label class="btn primary">＋ 写真を追加<input id="file" type="file" accept="image/*" multiple hidden></label>
+<select id="filter"><option value="">全メンバー</option></select>
+<select id="sort"><option value="desc">日付：新しい順</option><option value="asc">日付：古い順</option></select>
+<button id="exp">バックアップ保存</button>
+<label class="btn">読み込み<input id="imp" type="file" accept=".json,application/json" hidden></label>
+<span class="count" id="count">0枚</span></div><p id="persistst" class="persistst" hidden></p></header>
+<main id="grid"></main>
+<section id="osu"><div class="ohead"><b id="otitle"></b><small id="ometa"></small><label class="btn" style="margin-left:auto">おすすめを読み込む<input id="oimp" type="file" accept=".json,application/json" hidden></label></div>
+<div class="onote">📷 写真はXから表示しているだけで、アプリには保存されません。気に入ったら自分で保存してトレカにしてね</div>
+<div id="ogrid"></div></section>
+<dialog id="omenu"><img id="omimg" alt="" style="width:100%;max-height:50vh;object-fit:contain;border-radius:12px">
+<div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px"><button id="omake" class="primary">この写真でトレカを作る</button><a id="omgo" class="btn" target="_blank" rel="noopener noreferrer">Xの投稿をひらく ↗</a><button id="omclose">閉じる</button></div>
+<p id="omerr" style="display:none;font-size:12px;text-align:center">この画像はアプリから読み込めませんでした。Xから保存した画像を選んでね。</p>
+<div style="text-align:center"><label id="omfile" class="btn primary" style="display:none">保存した画像を選ぶ<input id="omf" type="file" accept="image/*" hidden></label></div></dialog>
+<div id="full"><div class="card" id="fcard"></div><div class="hint">ドラッグでぐりぐり回転・タップで裏返し</div><div class="tools"><button id="fflip">裏返す</button><button id="fclose">閉じる</button></div></div>
+<dialog id="dlg"><form method="dialog" id="form">
+<div style="display:flex;gap:12px;align-items:center"><img id="dprev" class="prev" alt=""><div id="dtitle" style="font-weight:bold">カード情報</div></div>
+<label>メンバー名</label><input name="member" list="mlist"><datalist id="mlist"></datalist>
+<label>日付</label><input name="date" type="date">
+<label>入手元メモ（例：X、Instagram）</label><input name="source">
+<label>自由メモ</label><textarea name="memo" rows="3"></textarea>
+<label>キラキラの種類</label><div class="fxsel"><select name="fx" id="fxs"></select><div class="fxsw" id="fxsw"><div class="face front"><div class="base"></div><div class="holo"></div><div class="glit"></div><div class="shine"></div></div></div></div>
+<label>フレームカラー</label><div class="colors" id="colors"></div>
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button value="cancel" formnovalidate>キャンセル</button><button value="ok" class="primary" id="okb">保存</button></div>
+</form></dialog>
+<div id="bktoast" role="status"><span class="msg">そろそろバックアップしとく？</span><div class="btns"><button type="button" id="bknow" class="primary">今すぐ保存</button><button type="button" id="bklater">あとで</button></div></div>
+<script>
+const COLORS=[['','ホロシルバー'],['#ff5c8a','ピンク'],['#ff9a3c','オレンジ'],['#ffd93c','イエロー'],['#4cd38a','グリーン'],['#4cb8ff','ブルー'],['#9b6bff','パープル'],['#ff4d4d','レッド'],['#ffffff','ホワイト'],['#333344','ブラック']];
+const FX=[['holo','今のホロ'],['rainbow','レインボー'],['galaxy','ギャラクシー'],['shine','シャイン'],['lame','ラメ'],['aurora','オーロラ（パステル）'],['none','なし']];
+const fxOf=c=>FX.some(f=>f[0]===c.fx)?c.fx:'holo';
+const fcBg=c=>c?`linear-gradient(135deg,${c},#fff 45%,${c} 70%,#fff)`:'linear-gradient(135deg,#d8d8e4,#fff,#b8bccc,#f4f4fa,#a9aec0)';
+const OSU_DEFAULT={"title": "IVE 最新ショット（LooksCanKill）", "updated": "2026-11-04", "items": [{"postUrl": "https://x.com/IVEstarship/status/2117240310698762328", "imageUrl": "https://pbs.twimg.com/media/HWHwZjvaEAA7d6u.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill (1/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2117240310698762328", "imageUrl": "https://pbs.twimg.com/media/HWHwZjpb0AAmegV.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill (2/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2117240311332110722", "imageUrl": "https://pbs.twimg.com/media/HWHwZj2a0AAtUYI.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-02", "note": "コンセプト写真 Chill"}, {"postUrl": "https://x.com/IVEstarship/status/2116809199078478066", "imageUrl": "https://pbs.twimg.com/media/HWBqvsbbsAAkvSA.jpg?name=large", "group": "IVE", "member": "", "date": "2026-11-01", "note": "SBS 人気歌謡 #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116442834790478003", "imageUrl": "https://pbs.twimg.com/media/HV8dibGbcAAz_IP.jpg?name=large", "group": "IVE", "member": "", "date": "2026-10-31", "note": "MBC ショー！音楽中心 #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116106241001087000", "imageUrl": "https://pbs.twimg.com/media/HV3raNNbYAAdlGW.jpg?name=large", "group": "IVE", "member": "", "date": "2026-10-30", "note": "KBS2 ミュージックバンク #IVE_SHOT"}, {"postUrl": "https://x.com/IVEstarship/status/2116159434590413225", "imageUrl": "https://pbs.twimg.com/media/HV4ZyAQbkAAHmZa.jpg?name=large", "group": "IVE", "member": "LIZ", "date": "2026-10-30", "note": "モモクTV (1/2)"}, {"postUrl": "https://x.com/IVEstarship/status/2116159434590413225", "imageUrl": "https://pbs.twimg.com/media/HV4ZyAMb0AATPbr.jpg?name=large", "group": "IVE", "member": "LIZ", "date": "2026-10-30", "note": "モモクTV (2/2)"}]};
+let db,cards=[],osu=null;
+function openDB(){return new Promise((r,j)=>{const q=indexedDB.open('oshi-toreka',2);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('cards'))d.createObjectStore('cards',{keyPath:'id'});if(!d.objectStoreNames.contains('osusume'))d.createObjectStore('osusume')};q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error)})}
+const tx=(m,f)=>new Promise((r,j)=>{const t=db.transaction('cards',m);const q=f(t.objectStore('cards'));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error)});
+const getAll=()=>tx('readonly',s=>s.getAll()),put=c=>tx('readwrite',s=>s.put(c)),del=id=>tx('readwrite',s=>s.delete(id));
+function resize(file){return new Promise((r,j)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const k=Math.min(1,1200/Math.max(i.width,i.height));const c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.85))};i.onerror=j;i.src=u})}
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function cardHTML(c){const bg=fcBg(c.color);return `<div class="inner"><div class="face front fx-${fxOf(c)}" style="--fc:${bg}"><img src="${c.img}" alt=""><div class="holo"></div><div class="glit"></div><div class="shine"></div></div><div class="face back" style="--fc:${bg}"><div class="backin"><b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">入手元</span><span>${esc(c.source)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="holo" style="opacity:.25"></div><div class="shine"></div></div></div>`}
+function render(){const f=filter.value,so=sort.value;
+const ms=[...new Set(cards.map(c=>c.member).filter(Boolean))].sort();
+filter.innerHTML='<option value="">全メンバー</option>'+ms.map(m=>`<option ${m===f?'selected':''}>${esc(m)}</option>`).join('');
+mlist.innerHTML=ms.map(m=>`<option value="${esc(m)}">`).join('');
+const l=cards.filter(c=>!f||c.member===f).sort((a,b)=>((a.date||'')<(b.date||'')?-1:(a.date||'')>(b.date||'')?1:a.created-b.created)*(so==='asc'?1:-1));
+count.textContent=l.length+'枚'+(f?` / 全${cards.length}枚`:'');
+grid.innerHTML=l.length?'':'<div class="empty">まだカードがありません。<br>「＋ 写真を追加」から推しの写真を選んでね 💖</div>';
+for(const c of l){const s=document.createElement('div');s.className='slot';s.innerHTML=`<div class="card">${cardHTML(c)}</div><div class="nm">${esc(c.member)}</div><div class="tools"><button data-a="e">編集</button><button data-a="d">削除</button></div>`;
+const cd=s.querySelector('.card');cd.onclick=()=>openFull(c);hover(cd);
+s.querySelector('[data-a=e]').onclick=()=>edit(c);
+s.querySelector('[data-a=d]').onclick=async()=>{if(confirm('このカードを削除しますか？')){await del(c.id);cards=cards.filter(x=>x!==c);render();renderOsu()}};grid.appendChild(s)}}
+function setLight(el,x,y){el.style.setProperty('--px',(x*100).toFixed(1)+'%');el.style.setProperty('--py',(y*100).toFixed(1)+'%')}
+function hover(cd){const inn=cd.querySelector('.inner');cd.addEventListener('pointermove',e=>{const r=cd.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;setLight(cd,x,y);inn.style.transform=`rotateY(${(x-.5)*20}deg) rotateX(${(.5-y)*20}deg)`});cd.addEventListener('pointerleave',()=>{inn.style.transform='';setLight(cd,.5,.5)})}
+function pickColor(cur){colors.innerHTML='';COLORS.forEach(([c,n])=>{const s=document.createElement('span');s.title=n;s.style.background=fcBg(c);if(c===cur)s.classList.add('sel');s.onclick=()=>{[...colors.children].forEach(x=>x.classList.remove('sel'));s.classList.add('sel');form.dataset.color=c};colors.appendChild(s)});form.dataset.color=cur||''}
+function pickFx(v){fxs.innerHTML=FX.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');fxs.value=v;const sw=fxsw.querySelector('.face'),u=()=>{sw.className='face front fx-'+fxs.value};fxs.onchange=u;u();fxsw.style.setProperty('--fc',fcBg(form.dataset.color||''))}
+fxsw.addEventListener('pointermove',e=>{const r=fxsw.getBoundingClientRect();setLight(fxsw,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)});
+let fxT=0;setInterval(()=>{if(!dlg.open)return;fxT+=.05;setLight(fxsw,.5+Math.sin(fxT)*.45,.5+Math.cos(fxT*.7)*.45)},50);
+function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;dprev.src=c.img;for(const k of['member','date','source','memo'])form[k].value=c[k]||'';pickColor(c.color);pickFx(fxOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','source','memo'])c[k]=form[k].value.trim();c.color=form.dataset.color;c.fx=fxs.value;r(true)}})}
+async function edit(c){if(await askInfo(c,'カードを編集')){await put(c);render()}}
+file.onchange=async()=>{const fs=[...file.files];file.value='';const last=cards.slice().sort((a,b)=>b.created-a.created)[0];
+for(let i=0;i<fs.length;i++){const c={id:Date.now().toString(36)+Math.random().toString(36).slice(2),created:Date.now(),img:await resize(fs[i]),member:last?last.member:'',date:new Date().toISOString().slice(0,10),source:'',memo:'',color:last?last.color:'',fx:last?fxOf(last):'holo'};
+if(await askInfo(c,`新しいカード (${i+1}/${fs.length})`)){c.dh=await dhashURL(c.img);await put(c);cards.push(c);render()}}};
+// fullscreen: free drag rotate with inertia
+let rx=0,ry=0,vx=0,vy=0,drag=false,lx,ly,moved=0,flip=false,raf,tiltX=0,tiltY=0;
+function openFull(c){fcard.innerHTML=cardHTML(c);rx=ry=vx=vy=0;flip=false;full.classList.add('on');cancelAnimationFrame(raf);loop()}
+function closeFull(){full.classList.remove('on');cancelAnimationFrame(raf)}
+function loop(){if(!drag){ry+=vy;rx+=vx;vx*=.95;vy*=.95;if(Math.abs(vx)+Math.abs(vy)<.3){rx*=.95;const t=flip?180:0,d=((ry-t)%360+540)%360-180;ry-=d*.06}}
+const R=ry+tiltY,X=rx+tiltX;fcard.querySelector('.inner').style.transform=`rotateX(${X}deg) rotateY(${R}deg)`;
+const nx=.5+Math.sin(R*Math.PI/180)*.6,ny=.5-Math.sin(X*Math.PI/180)*.6;fcard.querySelectorAll('.face').forEach(f=>setLight(f,nx,ny));raf=requestAnimationFrame(loop)}
+fcard.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;moved=0;vx=vy=0;fcard.setPointerCapture(e.pointerId)});
+fcard.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;moved+=Math.abs(dx)+Math.abs(dy);vy=dx*.5;vx=-dy*.5;ry+=vy;rx=Math.max(-60,Math.min(60,rx+vx))});
+fcard.addEventListener('pointerup',()=>{drag=false;if(moved<6)doFlip();else flip=Math.round((((ry+vy*20)%360)+360)%360/180)%2===1});
+function doFlip(){flip=!flip;vx=vy=0}
+fflip.onclick=doFlip;fclose.onclick=closeFull;full.addEventListener('click',e=>{if(e.target===full)closeFull()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeFull()});
+function onTilt(e){if(e.beta==null)return;tiltX=Math.max(-25,Math.min(25,(e.beta-45)*.5));tiltY=Math.max(-25,Math.min(25,e.gamma*.5));document.querySelectorAll('#grid .card').forEach(cd=>setLight(cd,.5+tiltY/50,.5+tiltX/50))}
+function enableTilt(){try{if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==='function')DeviceOrientationEvent.requestPermission().then(p=>{if(p==='granted')addEventListener('deviceorientation',onTilt)}).catch(()=>{});else if(window.DeviceOrientationEvent)addEventListener('deviceorientation',onTilt)}catch(e){}}
+addEventListener('pointerdown',function once(){removeEventListener('pointerdown',once);enableTilt()});
+const BK_KEY='oshi-toreka-bk';
+function bkMeta(){try{return JSON.parse(localStorage.getItem(BK_KEY)||'{}')}catch(e){return {}}}
+function setBkMeta(p){localStorage.setItem(BK_KEY,JSON.stringify(Object.assign(bkMeta(),p)))}
+function backupName(){const n=new Date();return 'oshi-toreka-backup-'+n.getFullYear()+String(n.getMonth()+1).padStart(2,'0')+String(n.getDate()).padStart(2,'0')+'.json'}
+function backupBlob(){return new Blob([JSON.stringify({app:'oshi-toreka',version:1,cards})],{type:'application/json'})}
+function hideBkToast(){bktoast.classList.remove('on')}
+function markBackedUp(){setBkMeta({at:Date.now(),count:cards.length,snooze:0});hideBkToast()}
+async function doBackup(){const blob=backupBlob(),name=backupName(),file=new File([blob],name,{type:'application/json'});
+try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'推しトレカのバックアップ',text:'推しトレカアルバムのバックアップ'});markBackedUp();return}}
+catch(e){if(e&&e.name==='AbortError')return}
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);markBackedUp()}
+function shouldRemind(){if(cards.length<1)return false;const m=bkMeta(),now=Date.now();if(m.snooze&&now<m.snooze)return false;if(!m.at)return true;if(now-m.at>=7*24*60*60*1000)return true;if(cards.length>=(m.count||0)+5)return true;return false}
+function maybeRemind(){if(shouldRemind())bktoast.classList.add('on');else hideBkToast()}
+async function askPersist(){const el=persistst;try{if(navigator.storage&&navigator.storage.persist){const p=await navigator.storage.persist();el.hidden=false;el.textContent=p?'この端末にしっかり保存中':'通常の保存（空き容量が減ると消えることがあります）'}else{el.hidden=false;el.textContent='通常の保存（空き容量が減ると消えることがあります）'}}catch(e){el.hidden=false;el.textContent='通常の保存（空き容量が減ると消えることがあります）'}}
+exp.onclick=()=>doBackup();
+bknow.onclick=()=>doBackup();
+bklater.onclick=()=>{setBkMeta({snooze:Date.now()+24*60*60*1000});hideBkToast()};
+imp.onchange=async()=>{const f=imp.files[0];imp.value='';if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.cards))throw 0;let n=0;for(const c of d.cards)if(c.id&&c.img){await put(c);n++}cards=await getAll();render();ensureHashes().then(renderOsu);alert(n+'枚のカードを読み込みました');maybeRemind()}catch(e){alert('読み込みに失敗しました。バックアップファイルを確認してください。')}};
+
+const HAM=10;
+function dhashImg(i){const c=document.createElement('canvas');c.width=9;c.height=8;const g=c.getContext('2d');g.drawImage(i,0,0,9,8);const d=g.getImageData(0,0,9,8).data;let s='',n=0;for(let y=0;y<8;y++)for(let x=0;x<8;x++){const p=(y*9+x)*4,q=p+4;n=n*2+((d[p]*3+d[p+1]*6+d[p+2])>(d[q]*3+d[q+1]*6+d[q+2])?1:0);if((y*8+x)%4===3){s+=n.toString(16);n=0}}return s}
+const loadImg=(src,cors)=>new Promise((r,j)=>{const i=new Image();if(cors)i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=j;i.src=src});
+const dhashURL=u=>loadImg(u).then(dhashImg).catch(()=>'');
+const ham=(a,b)=>{let n=0;for(let k=0;k<16;k++){let v=parseInt(a[k],16)^parseInt(b[k],16);while(v){n+=v&1;v>>=1}}return n};
+let corsOK=null;const ohc={};
+function osuHash(u){if(ohc[u]!==undefined)return Promise.resolve(ohc[u]);return loadImg(u,true).then(i=>{const x=dhashImg(i);corsOK=true;return ohc[u]=x}).catch(()=>{if(corsOK===null)corsOK=false;return ohc[u]=''})}
+async function ensureHashes(){let ch=0;for(const c of cards)if(!c.dh&&c.img){c.dh=await dhashURL(c.img);if(c.dh){await put(c);ch=1}}return ch}
+function osuMenu(it){omimg.src=it.imageUrl||'';omgo.href=it.postUrl;omerr.style.display=omfile.style.display='none';omenu._it=it;omenu.showModal()}
+async function makeFromOsu(it,img){const c={id:Date.now().toString(36)+Math.random().toString(36).slice(2),created:Date.now(),img,member:it.member||'',date:it.date||new Date().toISOString().slice(0,10),source:'X '+it.postUrl,memo:it.note||'',color:'',fx:'holo',srcImage:it.imageUrl,srcPost:it.postUrl};
+if(await askInfo(c,'おすすめからトレカを作る')){c.dh=await dhashURL(c.img);await put(c);cards.push(c);render();renderOsu()}}
+// おすすめ（Xの画像を表示するだけ・保存しない）
+const otx=(m,f)=>new Promise((r,j)=>{const t=db.transaction('osusume',m);const q=f(t.objectStore('osusume'));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error)});
+const okUrl=u=>/^https:\/\//.test(u||'');
+function osuNorm(d){if(!d||!Array.isArray(d.items))throw 0;const items=d.items.filter(i=>i&&okUrl(i.postUrl)).map(i=>({postUrl:i.postUrl,imageUrl:okUrl(i.imageUrl)?i.imageUrl:'',group:String(i.group||''),member:String(i.member||''),date:String(i.date||''),note:String(i.note||'')}));if(!items.length)throw 0;return{title:String(d.title||'おすすめ'),updated:String(d.updated||''),items}}
+function renderOsu(){const o=osu||OSU_DEFAULT;otitle.textContent=o.title||'おすすめ';
+ometa.textContent=[o.updated&&('更新 '+o.updated),osu&&osu.importedAt?('読み込み '+osu.importedAt):'（はじめのおすすめ）'].filter(Boolean).join('・');
+const usedSrc=new Set(cards.map(c=>c.srcImage).filter(Boolean)),hs=cards.map(c=>c.dh).filter(Boolean);ogrid.innerHTML='';let shown=0;for(const it of o.items){const a=document.createElement('a');a.className='otile';a.href=it.postUrl;a.target='_blank';a.rel='noopener noreferrer';
+const who=[it.group,it.member].filter(Boolean).join(' / ');
+a.innerHTML='<div class="ph"></div>';a.title=[who,it.date,it.note].filter(Boolean).join(' ');a.dataset.src=it.imageUrl;
+if(usedSrc.has(it.imageUrl)||usedSrc.has(it.postUrl+'#'+it.imageUrl))continue;
+let lp=0,lt;a.addEventListener('pointerdown',()=>{lp=0;lt=setTimeout(()=>{lp=1;osuMenu(it)},550)});['pointerup','pointerleave','pointercancel'].forEach(e=>a.addEventListener(e,()=>clearTimeout(lt)));
+a.addEventListener('click',e=>{if(lp){e.preventDefault();lp=0}});a.addEventListener('contextmenu',e=>{e.preventDefault();clearTimeout(lt);osuMenu(it)});
+const ph=a.querySelector('.ph'),ng=()=>{ph.classList.add('ng');ph.innerHTML='<span>🖼️</span>画像を表示できませんでした<u>Xの投稿をひらく ↗</u>'};
+if(it.imageUrl){const im=document.createElement('img');im.loading='lazy';im.decoding='async';im.referrerPolicy='no-referrer';im.alt=who;im.onerror=ng;im.src=it.imageUrl;ph.appendChild(im);osuHash(it.imageUrl).then(x=>{if(x&&hs.some(y=>ham(x,y)<=HAM)){a.remove();omore()}})}else ng();ogrid.appendChild(a);shown++}omore=()=>{if(!ogrid.children.length)ogrid.innerHTML='<div class="empty">おすすめは全部トレカにしたみたい！🎉<br>新しいおすすめを読み込んでね</div>'};omore()}let omore=()=>{};
+function showTab(v){document.body.classList.toggle('v-osu',v==='osu');tabA.classList.toggle('on',v!=='osu');tabO.classList.toggle('on',v==='osu');if(v==='osu')renderOsu()}
+omake.onclick=async()=>{const it=omenu._it;try{const i=await loadImg(it.imageUrl,true);const k=Math.min(1,1200/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);const d=c.toDataURL('image/jpeg',.85);omenu.close();makeFromOsu(it,d)}catch(e){omerr.style.display='block';omfile.style.display='inline-block'}};
+omf.onchange=async()=>{const f=omf.files[0];omf.value='';if(!f)return;const it=omenu._it;omenu.close();makeFromOsu(it,await resize(f))};omclose.onclick=()=>omenu.close();
+tabA.onclick=()=>showTab('album');tabO.onclick=()=>showTab('osu');
+oimp.onchange=async()=>{const f=oimp.files[0];oimp.value='';if(!f)return;try{const o=osuNorm(JSON.parse(await f.text()));const n=new Date();o.importedAt=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');await otx('readwrite',s=>s.put(o,'list'));osu=o;renderOsu();alert(o.items.length+'件のおすすめを読み込みました')}catch(e){alert('おすすめの読み込みに失敗しました。ファイルの形式を確認してください。')}};
+filter.onchange=sort.onchange=render;
+openDB().then(async d=>{db=d;cards=await getAll();render();try{osu=await otx('readonly',s=>s.get('list'))||null}catch(e){}renderOsu();ensureHashes().then(ch=>{if(ch)renderOsu()});askPersist();maybeRemind()}).catch(()=>alert('保存領域を開けませんでした（プライベートモードでは保存できない場合があります）'));
+</script></body></html>
