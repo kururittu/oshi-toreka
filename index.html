@@ -203,11 +203,56 @@ background:
 .bksw button{width:32px;height:32px;border-radius:50%;background:linear-gradient(155deg,var(--b1),var(--b2));box-shadow:0 1px 3px rgba(0,0,0,.18);position:relative;transition:transform .15s}
 .bksw button[aria-checked="true"]{transform:scale(1.08);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
 .bksw button[aria-checked="true"]::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff}
+
+#full .card,#full .card *{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}/* 裏のメモ欄(スクロール要素)でもブラウザのスクロールに取られない */
+/* v10: フォルダのタブ・絞り込みチップ・持ってる・トリミング */
+#ftabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:8px -16px 0;padding:0 12px;border-bottom:1px solid var(--line)}#ftabs::-webkit-scrollbar{display:none}
+#ftabs[hidden]{display:none}
+.ftab{flex:none;padding:8px 10px 9px;font-size:15px;color:var(--sub);white-space:nowrap;position:relative;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ftab.on{color:var(--ink);font-weight:700}.ftab.on::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2.5px;border-radius:2px;background:var(--pink)}
+.ftab.add{color:#aeaeb2;padding:8px 8px 9px}.ftab.add svg{margin-top:2px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:7px 11px;letter-spacing:0}
+.chip.sortc{background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:#3a3a3c}
+.csep{flex:none;width:1px;align-self:stretch;margin:6px 2px;background:var(--line)}
+#fmenu{position:fixed;z-index:31;min-width:180px;background:#fff;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.04);padding:6px;display:none}
+#fmenu.on{display:block}#fmenu .mi{display:block;width:100%;padding:11px 12px;border-radius:10px;font-size:15px;text-align:left}#fmenu .mi:active{background:#f2f2f5}#fmenu .danger{color:#e5484d}
+.slot{position:relative}
+.ownb{position:absolute;right:6px;bottom:6px;width:16px;height:16px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.18),0 0 0 1.5px #fff;pointer-events:none;z-index:2}
+.owntg{display:inline-flex;align-items:center;gap:4px;align-self:center;padding:5px 11px 5px 8px;border-radius:999px;font-size:12px;color:var(--sub);box-shadow:inset 0 0 0 1px var(--line);background:#fff}
+.owntg svg{opacity:.35}.owntg[aria-pressed="true"]{background:var(--pink);color:#fff;box-shadow:none}.owntg[aria-pressed="true"] svg{opacity:1}
+.ownrow{display:flex;align-items:center;gap:10px;margin-top:14px}
+dialog .ownrow label{display:inline;margin:0;font-size:15px;color:var(--ink)}
+input.sw{-webkit-appearance:none;appearance:none;flex:none;width:46px;height:28px;padding:0;border-radius:999px;background:#e5e5ea;position:relative;cursor:pointer;transition:background .2s}
+input.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+input.sw:checked{background:var(--pink)}input.sw:checked::after{transform:translateX(18px)}
+.prevw{position:relative;flex:none}
+.cropbtn{position:absolute;right:-8px;bottom:-8px;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.16)}
+#crop{width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border-radius:0;background:#141416;color:#fff;box-shadow:none}
+#crop[open]{display:flex;flex-direction:column}
+#crop::backdrop{background:#141416}
+#cropst{flex:1;position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;margin-top:var(--st)}
+#cimg{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;-webkit-user-drag:none;pointer-events:none}
+#cframe{position:absolute;border-radius:9%/6.4%;box-shadow:0 0 0 9999px rgba(20,20,22,.62);outline:1.5px solid rgba(255,255,255,.9);pointer-events:none}
+.cbtns{display:flex;gap:10px;justify-content:center;padding:14px 16px calc(var(--sb) + 18px)}
+.cbtns .pill{min-width:130px;height:50px}.cbtns .pill:not(.pri){background:rgba(255,255,255,.12);color:#fff}.cbtns .pill.pri{background:#fff;color:var(--ink)}
+
+/* v10b: 登録まわり */
+html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピンチ/ドラッグ直後のタップ（決定・保存）が消えないように */
+#crop button,#dlg button,.dock .dbtn{touch-action:manipulation}
+#toast{position:fixed;left:16px;right:16px;top:calc(var(--st) + 12px);z-index:2147483647;margin:auto;max-width:460px;background:rgba(29,29,31,.92);color:#fff;font-size:14px;line-height:1.5;padding:12px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);opacity:0;transform:translateY(-12px);transition:opacity .25s,transform .25s;pointer-events:none}
+#toast.on{opacity:1;transform:none}
+.fstart{position:absolute;width:1px;height:1px;outline:none}
+#dlg{max-height:calc(100% - 24px);max-height:calc(100dvh - 24px - var(--st) - var(--sb));overscroll-behavior:contain}
+.fbtns{position:sticky;bottom:-20px;display:flex;gap:8px;justify-content:flex-end;margin:18px -20px -20px;padding:12px 20px calc(16px);background:linear-gradient(rgba(255,255,255,0),#fff 30%)}
+.slot.new .card{animation:newpop 1.2s cubic-bezier(.2,1.4,.4,1)}
+@keyframes newpop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:none}}
+.nodlg dialog:not([open]){display:none}.nodlg dialog[open]{position:fixed;inset:0;margin:auto;z-index:100;height:fit-content;overflow:auto}.nodlg #crop[open]{height:100%}
 </style></head><body>
 <header>
 <div class="toprow"><h1 class="logo" aria-label="推しトレカアルバム"><svg class="lmark" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><rect x="1" y="1" width="20" height="26" rx="5" fill="#ff4f86"/><path d="M11 18.6c-3.2-2.2-5-4-5-6a2.6 2.6 0 0 1 5-1 2.6 2.6 0 0 1 5 1c0 2-1.8 3.8-5 6z" fill="#fff"/></svg><span class="ltxt">推しトレカアルバム</span></h1>
 <button class="iconbtn" id="menubtn" aria-label="メニュー"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button></div>
 <div class="count" id="count">0枚</div>
+<div id="ftabs" role="tablist" aria-label="フォルダ" hidden></div>
 <div id="chips" hidden></div>
 </header>
 <div id="menu" role="menu">
@@ -216,6 +261,7 @@ background:
 <button class="mi" id="sortbtn" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg><span id="sortlbl">古い順に並べる</span></button>
 <hr><p id="persistst" class="persistst" hidden></p>
 </div>
+<div id="fmenu" role="menu"><button class="mi" id="fren" type="button">名前を変える</button><button class="mi danger" id="fdelf" type="button">フォルダを削除</button></div>
 <main id="grid"></main>
 <div class="dock">
 <label class="dbtn pri" id="addbtn" role="button" aria-label="トレカ登録"><svg class="ic" data-icon="photo-person" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2.2"/><circle cx="12" cy="9.6" r="2.6"/><path d="M7.6 19.2c.7-2.9 2.4-4.4 4.4-4.4s3.7 1.5 4.4 4.4"/></svg><span>トレカ登録</span><input id="file" type="file" accept="image/*" multiple hidden></label>
@@ -223,7 +269,7 @@ background:
 </div>
 <div id="full"><button class="iconbtn" id="fclose" aria-label="閉じる"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 <div class="card" id="fcard"></div>
-<div id="finfo"><b id="fname"></b><span id="fdate"></span></div>
+<div id="finfo"><b id="fname"></b><span id="fdate"></span><button type="button" class="owntg" id="fown" aria-pressed="false" aria-label="持ってる"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>持ってる</span></button></div>
 <div class="acts"><button class="rbtn" id="fdel" aria-label="削除"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
 <button class="rbtn big" id="fflip" aria-label="裏返す"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12A8 8 0 0 1 18.3 7.1"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg></button>
 <button class="rbtn" id="fedit" aria-label="編集"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button></div>
@@ -234,18 +280,27 @@ background:
 <div id="pempty"><svg width="72" height="96" viewBox="0 0 72 96" fill="none" stroke="#c7c7cc" stroke-width="2.5" stroke-dasharray="7 6"><rect x="3" y="3" width="66" height="90" rx="9"/></svg><button class="rbtn big" id="pempadd" type="button" aria-label="写真を追加"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
 <div id="pbtns"><button class="pill" id="pdone" type="button">とじる</button><button class="pill pri" id="pagain" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>もう一回引く</button></div>
 </div>
-<dialog id="dlg"><form method="dialog" id="form">
-<div style="display:flex;gap:12px;align-items:center"><img id="dprev" class="prev" alt=""><div id="dtitle" style="font-weight:700;font-size:17px">カード情報</div></div>
+<dialog id="dlg"><form method="dialog" id="form"><span tabindex="-1" autofocus class="fstart"></span>
+<div style="display:flex;gap:12px;align-items:center"><div class="prevw"><img id="dprev" class="prev" alt=""><button type="button" id="dcrop" class="cropbtn" aria-label="トリミング"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg></button></div><div id="dtitle" style="font-weight:700;font-size:17px">カード情報</div></div>
 <label>メンバー名</label><input name="member" list="mlist"><datalist id="mlist"></datalist>
 <label>日付</label><input name="date" type="date">
 <label>入手元メモ（例：X、Instagram）</label><input name="source">
 <label>自由メモ</label><textarea name="memo" rows="3"></textarea>
+<label>フォルダ</label><select name="folder" id="fsel"></select>
+<div class="ownrow"><input type="checkbox" name="owned" id="fowned" class="sw"><label for="fowned">持ってる</label></div>
 <label>裏の色</label><div class="bksw" id="bksw" role="radiogroup" aria-label="カードの裏の色"></div>
 <label>キラキラの種類</label><div class="fxsel"><select name="fx" id="fxs"></select><div class="fxsw" id="fxsw"><div class="face front"><div class="base"></div><div class="holo"></div><div class="glit"></div><div class="shine"></div></div></div></div>
-<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px"><button value="cancel" class="pill" formnovalidate>キャンセル</button><button value="ok" class="pill pri" id="okb">保存</button></div>
+<div class="fbtns"><button value="cancel" class="pill" formnovalidate>キャンセル</button><button value="ok" class="pill pri" id="okb">保存</button></div>
 </form></dialog>
+<dialog id="crop" aria-label="トリミング"><div id="cropst"><img id="cimg" alt="" draggable="false"><div id="cframe"></div></div>
+<div class="cbtns"><button type="button" class="pill" id="cropno">キャンセル</button><button type="button" class="pill pri" id="cropok">決定</button></div></dialog>
+<div id="toast" role="alert" aria-live="assertive"></div>
 <div id="bktoast" role="status" aria-label="そろそろバックアップしとく？"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff4f86" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span class="msg">バックアップ</span><div class="btns"><button type="button" id="bknow" aria-label="今すぐ保存"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button><button type="button" id="bklater" aria-label="あとで"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>
 <script>
+// <dialog> が無い古いブラウザ（iOS 15.3 以前など）でも 登録フォームが動くように
+(()=>{if(window.HTMLDialogElement&&HTMLDialogElement.prototype.showModal)return;document.documentElement.classList.add('nodlg');
+for(const d of document.querySelectorAll('dialog')){d.returnValue='';d.showModal=()=>{d.setAttribute('open','')};d.close=v=>{if(!d.hasAttribute('open'))return;d.removeAttribute('open');if(v!==undefined)d.returnValue=v;d.dispatchEvent(new Event('close'))};Object.defineProperty(d,'open',{get:()=>d.hasAttribute('open')});
+const f=d.querySelector('form[method=dialog]');if(f){let last='';f.addEventListener('click',e=>{const b=e.target.closest('button');if(b)last=b.value||''});f.addEventListener('submit',e=>{e.preventDefault();d.close((e.submitter&&e.submitter.value)||last)})}}})();
 const FX=[['holo','今のホロ'],['rainbow','レインボー'],['galaxy','ギャラクシー'],['shine','シャイン'],['lame','ラメ'],['aurora','オーロラ（パステル）'],['none','なし']];
 const fxOf=c=>FX.some(f=>f[0]===c.fx)?c.fx:'holo';
 // 裏の色（新しいフィールド back。無い/不明ならピンク。古い color フィールドはそのまま残して使わない）
@@ -253,28 +308,47 @@ const BACKS=[['pink','ピンク'],['red','レッド'],['orange','オレンジ'],
 const LIGHT_BACKS=new Set(['yellow','lime']);
 const backOf=c=>BACKS.some(b=>b[0]===c.back)?c.back:'pink';
 const $=id=>document.getElementById(id);
-let db,cards=[],curMember='',sortDir='desc';
-try{sortDir=JSON.parse(localStorage.getItem('oshi-toreka-ui')||'{}').sort==='asc'?'asc':'desc'}catch(e){}
+let db,cards=[],folders=[],curMember='',curOwn='',curFolder='',sortDir='desc';
+try{const u=JSON.parse(localStorage.getItem('oshi-toreka-ui')||'{}');sortDir=u.sort==='asc'?'asc':'desc';curFolder=u.folder||''}catch(e){}
+function saveUI(){try{localStorage.setItem('oshi-toreka-ui',JSON.stringify({sort:sortDir,folder:curFolder}))}catch(e){}}
 // DB（v3と同じ：DB名・ストア名・カードの形はそのまま。osusumeストアも残す）
-function openDB(){return new Promise((r,j)=>{const q=indexedDB.open('oshi-toreka',2);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('cards'))d.createObjectStore('cards',{keyPath:'id'});if(!d.objectStoreNames.contains('osusume'))d.createObjectStore('osusume')};q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error)})}
-const tx=(m,f)=>new Promise((r,j)=>{const t=db.transaction('cards',m);const q=f(t.objectStore('cards'));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error)});
+function openDB(){return new Promise((r,j)=>{const q=indexedDB.open('oshi-toreka',3);q.onblocked=()=>toast('ほかのタブ（またはホーム画面のアプリ）を閉じてから開きなおしてね',8000);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('cards'))d.createObjectStore('cards',{keyPath:'id'});if(!d.objectStoreNames.contains('osusume'))d.createObjectStore('osusume');if(!d.objectStoreNames.contains('folders'))d.createObjectStore('folders',{keyPath:'id'})};q.onsuccess=()=>{const d=q.result;d.onversionchange=()=>{d.close();toast('新しいバージョンがあります。ページを開きなおしてね',8000)};r(d)};q.onerror=()=>j(q.error)})}
+let dbReady=null;
+const tx=async(m,f,st='cards')=>{if(!db)await dbReady;return new Promise((r,j)=>{const t=db.transaction(st,m);const q=f(t.objectStore(st));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error);t.onabort=()=>j(t.error||new Error('abort'))})};
+const getFolders=async()=>(await tx('readonly',s=>s.getAll(),'folders')).sort((a,b)=>a.created-b.created),putFolder=f=>tx('readwrite',s=>s.put(f),'folders'),delFolder=id=>tx('readwrite',s=>s.delete(id),'folders');
+const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2);
+const inFolder=()=>cards.filter(c=>!curFolder||c.folder===curFolder);// いまのフォルダのカード（すべて＝全部）
 const getAll=()=>tx('readonly',s=>s.getAll()),put=c=>tx('readwrite',s=>s.put(c)),del=id=>tx('readwrite',s=>s.delete(id));
 function resize(file){return new Promise((r,j)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const k=Math.min(1,1200/Math.max(i.width,i.height));const c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.85))};i.onerror=j;i.src=u})}
+let toastT=0;function toast(m,ms=4500){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),ms)}
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};// 端末の日付（UTCだと朝9時前は前日になる）
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtDate=d=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||'');return m?`${+m[1]}.${+m[2]}.${+m[3]}`:(d||'')};
 function frontHTML(c){return `<div class="face front fx-${fxOf(c)}"><img src="${c.img}" alt="" draggable="false"><div class="holo"></div><div class="glit"></div><div class="shine"></div></div>`}
 function cardHTML(c){return `<div class="inner">${frontHTML(c)}<div class="face back bk-${backOf(c)}${LIGHT_BACKS.has(backOf(c))?' lt':''}"><div class="backin"><b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">入手元</span><span>${esc(c.source)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="bshine"></div></div></div>`}
 function sorted(l){return l.sort((a,b)=>((a.date||'')<(b.date||'')?-1:(a.date||'')>(b.date||'')?1:a.created-b.created)*(sortDir==='asc'?1:-1))}
-function render(){const ms=[...new Set(cards.map(c=>c.member).filter(Boolean))].sort();
+const ICON_SORT='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>';
+const ICON_CHK='<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function chipBtn(txt,on,f,cls){const b=document.createElement('button');b.type='button';b.className='chip'+(cls?' '+cls:'')+(on?' on':'');b.innerHTML=txt;b.onclick=f;return b}
+function renderTabs(){if(curFolder&&!folders.some(f=>f.id===curFolder))curFolder='';
+ftabs.hidden=!cards.length&&!folders.length;ftabs.innerHTML='';
+const tab=(id,name)=>{const b=document.createElement('button');b.type='button';b.className='ftab'+(id===curFolder?' on':'');b.setAttribute('role','tab');b.setAttribute('aria-selected',id===curFolder);b.dataset.f=id;b.textContent=name;
+b.onclick=()=>{if(b._lp)return;curFolder=id;saveUI();render()};if(id)longPress(b,()=>openFmenu(id,b));ftabs.appendChild(b)};
+tab('','すべて');folders.forEach(f=>tab(f.id,f.name));
+const add=document.createElement('button');add.type='button';add.className='ftab add';add.id='fadd';add.setAttribute('aria-label','新しいフォルダ');add.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';add.onclick=async()=>{const f=await newFolder();if(f){curFolder=f.id;saveUI();render()}};ftabs.appendChild(add)}
+function render(){renderTabs();const base=inFolder(),ms=[...new Set(base.map(c=>c.member).filter(Boolean))].sort();
 if(curMember&&!ms.includes(curMember))curMember='';
-chips.hidden=ms.length<2;chips.innerHTML='';
-for(const m of['',...ms]){const b=document.createElement('button');b.className='chip'+(m===curMember?' on':'');b.textContent=m||'すべて';b.dataset.m=m;b.onclick=()=>{curMember=m;render()};chips.appendChild(b)}
+chips.hidden=!cards.length;chips.innerHTML='';// 並び・持ってる は いつでも出す（メンバーは2人以上のとき）
+chips.appendChild(chipBtn(ICON_SORT+'<span>'+(sortDir==='asc'?'古い順':'新しい順')+'</span>',false,()=>{sortDir=sortDir==='asc'?'desc':'asc';saveUI();render()},'sortc'));
+const sep=()=>{const i=document.createElement('i');i.className='csep';chips.appendChild(i)};sep();
+for(const [k,n] of [['','すべて'],['y','持ってる'],['n','持ってない']]){const b=chipBtn(n,k===curOwn,()=>{curOwn=k;render()},'own');b.dataset.o=k;chips.appendChild(b)}
+if(ms.length>=2){sep();for(const m of['',...ms]){const b=chipBtn(esc(m)||'全員',m===curMember,()=>{curMember=m;render()});b.dataset.m=m;chips.appendChild(b)}}
 mlist.innerHTML=ms.map(m=>`<option value="${esc(m)}">`).join('');
-const l=sorted(cards.filter(c=>!curMember||c.member===curMember));
-count.textContent=l.length+'枚'+(curMember?` / 全${cards.length}枚`:'');
+const l=sorted(base.filter(c=>(!curMember||c.member===curMember)&&(!curOwn||(curOwn==='y')===!!c.owned)));
+count.textContent=l.length+'枚'+(l.length!==cards.length?` / 全${cards.length}枚`:'');
 sortlbl.textContent=sortDir==='asc'?'新しい順に並べる':'古い順に並べる';
 grid.innerHTML=l.length?'':'<div class="empty"><svg width="64" height="86" viewBox="0 0 72 96" fill="none" stroke="#c7c7cc" stroke-width="2.5" stroke-dasharray="7 6"><rect x="3" y="3" width="66" height="90" rx="9"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:auto"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>';
-for(const c of l){const s=document.createElement('div');s.className='slot';s.dataset.id=c.id;s.dataset.member=c.member||'';s.innerHTML=`<div class="card">${cardHTML(c)}</div>`;
+for(const c of l){const s=document.createElement('div');s.className='slot';s.dataset.id=c.id;s.dataset.member=c.member||'';s.innerHTML=`<div class="card">${cardHTML(c)}</div>`+(c.owned?`<span class="ownb" aria-label="持ってる">${ICON_CHK}</span>`:'');s.classList.toggle('owned',!!c.owned);
 const cd=s.querySelector('.card');cd.onclick=()=>openFull(c);hover(cd);grid.appendChild(s)}}
 function setLight(el,x,y){el.style.setProperty('--px',(x*100).toFixed(1)+'%');el.style.setProperty('--py',(y*100).toFixed(1)+'%')}
 function hover(cd){cd.addEventListener('pointermove',e=>{const r=cd.getBoundingClientRect();setLight(cd,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)});cd.addEventListener('pointerleave',()=>setLight(cd,.5,.5))}
@@ -283,55 +357,105 @@ fxsw.addEventListener('pointermove',e=>{const r=fxsw.getBoundingClientRect();set
 let fxT=0;setInterval(()=>{if(!dlg.open)return;fxT+=.05;setLight(fxsw,.5+Math.sin(fxT)*.45,.5+Math.cos(fxT*.7)*.45)},50);
 function pickBack(v){bksw.dataset.v=v;bksw.innerHTML=BACKS.map(([k,n])=>`<button type="button" role="radio" class="bk-${k}" data-v="${k}" aria-label="${n}" aria-checked="${k===v}"></button>`).join('');
 bksw.querySelectorAll('button').forEach(b=>b.onclick=()=>{bksw.dataset.v=b.dataset.v;bksw.querySelectorAll('button').forEach(x=>x.setAttribute('aria-checked',x===b))})}
-function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;dprev.src=c.img;for(const k of['member','date','source','memo'])form[k].value=c[k]||'';pickFx(fxOf(c));pickBack(backOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','source','memo'])c[k]=form[k].value.trim();c.fx=fxs.value;c.back=bksw.dataset.v||'pink';r(true)}})}
-async function edit(c){if(await askInfo(c,'カードを編集')){await put(c);render();if(fcur===c){fcard.innerHTML=cardHTML(c);setFinfo(c)}}}
-file.onchange=async()=>{const fs=[...file.files];file.value='';const last=cards.slice().sort((a,b)=>b.created-a.created)[0];
-for(let i=0;i<fs.length;i++){const c={id:Date.now().toString(36)+Math.random().toString(36).slice(2),created:Date.now(),img:await resize(fs[i]),member:last?last.member:'',date:new Date().toISOString().slice(0,10),source:'',memo:'',color:last?(last.color||''):'',fx:last?fxOf(last):'holo'};
-if(await askInfo(c,fs.length>1?`新しいカード (${i+1}/${fs.length})`:'新しいカード')){await put(c);cards.push(c);render()}}};
+function fillFolders(v){fsel.innerHTML='<option value="">フォルダなし</option>'+folders.map(f=>`<option value="${esc(f.id)}">${esc(f.name)}</option>`).join('')+'<option value="+">＋ 新しいフォルダ</option>';fsel.value=folders.some(f=>f.id===v)?v:'';fsel.dataset.v=fsel.value}
+fsel.onchange=async()=>{if(fsel.value!=='+'){fsel.dataset.v=fsel.value;return}const f=await newFolder();fillFolders(f?f.id:fsel.dataset.v);if(f)renderTabs()};
+let pendImg=null;
+dcrop.onclick=async()=>{const u=await cropImage(pendImg||dprev.src);if(u){pendImg=u;dprev.src=u}};
+function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;pendImg=null;dprev.src=c.img;for(const k of['member','date','source','memo'])form[k].value=c[k]||'';form.owned.checked=!!c.owned;fillFolders(c.folder||'');pickFx(fxOf(c));pickBack(backOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','source','memo'])c[k]=form[k].value.trim();c.fx=fxs.value;c.back=bksw.dataset.v||'pink';c.owned=form.owned.checked;c.folder=fsel.value==='+'?'':fsel.value;if(pendImg)c.img=pendImg;r(true)}})}
+async function edit(c){if(await askInfo(c,'カードを編集')){try{await put(c)}catch(e){toast('保存できませんでした');return}reveal(c);if(fcur===c){fcard.innerHTML=cardHTML(c);setFinfo(c)}}}
+file.onchange=async()=>{const fs=[...file.files];file.value='';const last=cards.slice().sort((a,b)=>b.created-a.created)[0];let shown=null;
+for(let i=0;i<fs.length;i++){let img;const u=URL.createObjectURL(fs[i]);try{img=await cropImage(u)}catch(e){img=null;toast(e&&e.msg||'この画像は読み込めませんでした（別の写真で試してね）')}finally{URL.revokeObjectURL(u)}if(!img)continue;// トリミング → キャンセル/失敗ならその1枚はやめる
+const c={id:newId(),created:Date.now(),img,owned:false,folder:curFolder,member:last?last.member:'',date:today(),source:'',memo:'',color:last?(last.color||''):'',fx:last?fxOf(last):'holo'};
+if(await askInfo(c,fs.length>1?`新しいカード (${i+1}/${fs.length})`:'新しいカード')){try{await put(c)}catch(e){toast('保存できませんでした（空き容量を確認してね）');continue}cards.push(c);reveal(c);shown=c}}
+if(shown)flash(shown)};
+// 保存したカードが 絞り込みで隠れないように（隠れるなら絞り込みを外す）
+function reveal(c){if(curOwn&&(curOwn==='y')!==!!c.owned)curOwn='';if(curMember&&c.member!==curMember)curMember='';if(curFolder&&c.folder!==curFolder){curFolder=c.folder||'';saveUI()}render()}
+function flash(c){const s=grid.querySelector(`.slot[data-id="${c.id}"]`);if(!s)return;s.scrollIntoView({block:'center',behavior:'smooth'});s.classList.remove('new');s.offsetWidth;s.classList.add('new')}
+// ===== トリミング（カードと同じ縦横比の枠。1本指で移動・2本指/ホイールで拡大） =====
+const CA=88/63,CR={p:new Map()};
+function cropImage(src){return new Promise((res,rej)=>{const im=new Image();im.decoding='async';
+im.onload=()=>{if(!im.naturalWidth||!im.naturalHeight)return rej({msg:'この画像は読み込めませんでした（別の写真で試してね）'});CR.im=im;CR.res=res;cimg.src=src;if(!crop.open)crop.showModal();CR.tries=0;requestAnimationFrame(cropLayout)};
+im.onerror=()=>rej({msg:'この画像は読み込めませんでした（HEICなどは「写真」アプリから選ぶか、スクショで試してね）'});im.src=src})}
+function cropLayout(){const st=cropst.getBoundingClientRect(),iw=CR.im.naturalWidth,ih=CR.im.naturalHeight;if((st.width<10||st.height<10)&&CR.tries++<30)return requestAnimationFrame(cropLayout);// まだ画面に出ていなければ次のフレームで
+const fw=Math.min(st.width*.84,st.height*.9/CA),fh=fw*CA,fx=(st.width-fw)/2,fy=(st.height-fh)/2;Object.assign(CR,{fw,fh,fx,fy,iw,ih,smin:Math.max(fw/iw,fh/ih)});
+Object.assign(cframe.style,{left:fx+'px',top:fy+'px',width:fw+'px',height:fh+'px'});cimg.style.width=iw+'px';cimg.style.height=ih+'px';
+CR.s=CR.smin;CR.x=fx+(fw-iw*CR.s)/2;CR.y=fy+(fh-ih*CR.s)/2;cropApply()}
+function cropApply(){const {fw,fh,fx,fy,iw,ih}=CR;CR.s=clamp(CR.s,CR.smin,CR.smin*8);CR.x=clamp(CR.x,fx+fw-iw*CR.s,fx);CR.y=clamp(CR.y,fy+fh-ih*CR.s,fy);
+cimg.style.transform=`translate(${CR.x.toFixed(2)}px,${CR.y.toFixed(2)}px) scale(${CR.s.toFixed(5)})`}
+function cropZoom(k,mx,my){const s0=CR.s,s1=clamp(s0*k,CR.smin,CR.smin*8),r=s1/s0;CR.x=mx-(mx-CR.x)*r;CR.y=my-(my-CR.y)*r;CR.s=s1;cropApply()}
+const cpt=e=>{const r=cropst.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}};
+const cmid=()=>{const v=[...CR.p.values()];return v.length<2?v[0]:{x:(v[0].x+v[1].x)/2,y:(v[0].y+v[1].y)/2,d:Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)}};
+cropst.addEventListener('pointerdown',e=>{e.preventDefault();try{cropst.setPointerCapture(e.pointerId)}catch(_){}CR.p.set(e.pointerId,cpt(e))});
+cropst.addEventListener('pointermove',e=>{if(!CR.p.has(e.pointerId))return;const a=cmid();CR.p.set(e.pointerId,cpt(e));const b=cmid();
+if(CR.p.size>=2&&a.d){CR.x+=b.x-a.x;CR.y+=b.y-a.y;cropZoom(b.d/a.d,b.x,b.y)}else{CR.x+=b.x-a.x;CR.y+=b.y-a.y;cropApply()}});
+const cup=e=>CR.p.delete(e.pointerId);cropst.addEventListener('pointerup',cup);cropst.addEventListener('pointercancel',cup);
+cropst.addEventListener('wheel',e=>{e.preventDefault();const p=cpt(e);cropZoom(Math.exp(-e.deltaY*.0015),p.x,p.y)},{passive:false});
+function cropDone(v){CR.p.clear();crop.close();const r=CR.res;CR.res=null;if(r)r(v)}
+cropno.onclick=()=>cropDone(null);crop.addEventListener('cancel',e=>{e.preventDefault();cropDone(null)});
+cropok.onclick=()=>{const {fw,fh,fx,fy,s,x,y}=CR,sw=fw/s,sh=fh/s,oh=Math.round(Math.min(1000,sh)),ow=Math.round(oh/CA);// 長い辺 最大1000px・JPEG 0.9
+let out=null;try{const cv=document.createElement('canvas');cv.width=Math.max(1,ow);cv.height=Math.max(1,oh);const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,cv.width,cv.height);g.imageSmoothingQuality='high';g.drawImage(CR.im,(fx-x)/s,(fy-y)/s,sw,sh,0,0,cv.width,cv.height);out=cv.toDataURL('image/jpeg',.9);cv.width=cv.height=0}catch(e){out=null}// 使い終わったキャンバスはすぐ解放（iPhoneのメモリ対策）
+if(!out||out.length<100){toast('画像を作れませんでした（もう一度ためしてね）');return}cropDone(out)};
+// iPhone：2本指でページごと拡大されないように
+for(const t of ['touchmove','gesturestart','gesturechange'])cropst.addEventListener(t,e=>e.preventDefault(),{passive:false});
+// フォルダ（長押しで 名前を変える／削除。削除してもカードは消えず「フォルダなし」に）
+function longPress(el,f){let t=0,x=0,y=0;el.addEventListener('pointerdown',e=>{el._lp=false;x=e.clientX;y=e.clientY;clearTimeout(t);t=setTimeout(()=>{el._lp=true;f()},520)});
+const no=()=>clearTimeout(t);el.addEventListener('pointerup',no);el.addEventListener('pointercancel',no);el.addEventListener('pointerleave',no);el.addEventListener('pointermove',e=>{if(Math.hypot(e.clientX-x,e.clientY-y)>8)no()});el.addEventListener('contextmenu',e=>{e.preventDefault();clearTimeout(t);el._lp=true;f()})}
+let fmid='';function openFmenu(id,b){fmid=id;const r=b.getBoundingClientRect();fmenu.style.left=Math.min(innerWidth-200,Math.max(8,r.left))+'px';fmenu.style.top=(r.bottom+6)+'px';fmenu.classList.add('on')}
+function closeFmenu(){fmenu.classList.remove('on');setTimeout(()=>ftabs.querySelectorAll('.ftab').forEach(b=>b._lp=false),50)}
+async function newFolder(){const n=(prompt('フォルダの名前')||'').trim();if(!n)return null;const f={id:'f'+newId(),name:n.slice(0,30),created:Date.now()};await putFolder(f);folders.push(f);return f}
+fren.onclick=async()=>{const f=folders.find(x=>x.id===fmid);closeFmenu();if(!f)return;const n=(prompt('フォルダの名前',f.name)||'').trim();if(n){f.name=n.slice(0,30);await putFolder(f);render()}};
+fdelf.onclick=async()=>{const f=folders.find(x=>x.id===fmid);closeFmenu();if(!f||!confirm(`「${f.name}」を削除しますか？（カードは消えません）`))return;
+for(const c of cards)if(c.folder===f.id){c.folder='';await put(c)}await delFolder(f.id);folders=folders.filter(x=>x!==f);if(curFolder===f.id){curFolder='';saveUI()}render()};
+document.addEventListener('pointerdown',e=>{if(fmenu.classList.contains('on')&&!fmenu.contains(e.target))closeFmenu()});
 // メニュー
 menubtn.onclick=e=>{e.stopPropagation();menu.classList.toggle('on')};
 document.addEventListener('click',e=>{if(menu.classList.contains('on')&&!menu.contains(e.target))menu.classList.remove('on')});
-sortbtn.onclick=()=>{sortDir=sortDir==='asc'?'desc':'asc';try{localStorage.setItem('oshi-toreka-ui',JSON.stringify({sort:sortDir}))}catch(e){}menu.classList.remove('on');render()};
+sortbtn.onclick=()=>{sortDir=sortDir==='asc'?'desc':'asc';saveUI();menu.classList.remove('on');render()};
 
 // ===== 詳細：ばね物理で余韻のある動き（傾き＋ドラッグ） =====
 const S={rx:0,ry:0,tx:0,ty:0,sc:1,vrx:0,vry:0,vtx:0,vty:0,vsc:0};
 let baseY=0,drag=null,raf=0,lastT=0,fcur=null;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function setFinfo(c){fname.textContent=c.member||'';fdate.textContent=fmtDate(c.date)}
+function setFinfo(c){fname.textContent=c.member||'';fdate.textContent=fmtDate(c.date);fown.setAttribute('aria-pressed',!!c.owned)}
+fown.onclick=async()=>{const c=fcur;if(!c)return;c.owned=!c.owned;setFinfo(c);await put(c);render()};
 function openFull(c){fcur=c;fcard.innerHTML=cardHTML(c);setFinfo(c);for(const k in S)S[k]=k==='sc'?.92:0;S.ry=-14;S.vry=60;baseY=0;drag=null;full.classList.add('on');cancelAnimationFrame(raf);lastT=0;raf=requestAnimationFrame(loop)}
 function closeFull(){full.classList.remove('on');cancelAnimationFrame(raf);fcur=null}
 function spring(p,t,k,c,dt){const a=k*(t-S[p])-c*S['v'+p];S['v'+p]+=a*dt;S[p]+=S['v'+p]*dt}
-function step(dt){const d=drag;const k=d?420:70,c=d?32:6.2;// 離した後はやわらかいばね（減衰比≈0.37）→ ふわっと行き過ぎてゆっくり戻る
+function step(dt){const d=drag;const k=d?520:70,c=d?40:6.2;// 離した後はやわらかいばね（減衰比≈0.37）→ ふわっと行き過ぎてゆっくり戻る
 let trx=0,try_=baseY,ttx=0,tty=0,tsc=1;
-if(d){try_+=d.dx*.4;trx=clamp(trx-d.dy*.35,-50,50);ttx+=d.dx*.10;tty+=d.dy*.10;tsc=1.03}
+if(d){try_+=d.dx*DEG;trx=clamp(-d.dy*.12,-12,12);tsc=1.02}// 横ドラッグ＝Y軸でぐるっと回す（指に追従）。縦はほんの少し傾くだけ
 spring('rx',trx,k,c,dt);spring('ry',try_,k,c,dt);spring('tx',ttx,k*.8,c,dt);spring('ty',tty,k*.8,c,dt);spring('sc',tsc,260,18,dt)}
 function loop(t){const el=fcard.querySelector('.inner');if(!el)return;let dt=lastT?Math.min(.05,(t-lastT)/1000):1/60;lastT=t;const n=4;for(let i=0;i<n;i++)step(dt/n);
 el.style.transform=`translate3d(${S.tx.toFixed(2)}px,${S.ty.toFixed(2)}px,0) rotateX(${S.rx.toFixed(2)}deg) rotateY(${S.ry.toFixed(2)}deg) scale(${S.sc.toFixed(4)})`;
 const nx=.5+Math.sin(S.ry*Math.PI/180)*.6+Math.sin(t/1600)*.08,ny=.5-Math.sin(S.rx*Math.PI/180)*.6+Math.cos(t/2100)*.06;fcard.querySelectorAll('.face').forEach(f=>setLight(f,nx,ny));raf=requestAnimationFrame(loop)}
-fcard.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0};try{fcard.setPointerCapture(e.pointerId)}catch(_){}});
-fcard.addEventListener('pointermove',e=>{if(!drag)return;const ndx=e.clientX-drag.x,ndy=e.clientY-drag.y;drag.moved+=Math.abs(ndx-drag.dx)+Math.abs(ndy-drag.dy);drag.dx=ndx;drag.dy=ndy});
-function endDrag(){if(!drag)return;const d=drag;drag=null;if(d.moved<6){doFlip();return}const turns=Math.round(d.dx*.4/180);if(turns)baseY+=turns*180}
+const DEG=.6;let lastRel=null;// 1px あたりの回転（300px で裏）
+fcard.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,dx:0,dy:0,moved:0,v:0,t:performance.now()};try{fcard.setPointerCapture(e.pointerId)}catch(_){}});
+function dragMove(e){if(!drag)return;const ndx=e.clientX-drag.x,ndy=e.clientY-drag.y;drag.moved+=Math.abs(ndx-drag.dx)+Math.abs(ndy-drag.dy);const now=performance.now();drag.t=now;(drag.h=drag.h||[]).push([now,ndx]);while(drag.h.length>2&&now-drag.h[0][0]>110)drag.h.shift();const h0=drag.h[0];drag.v=now-h0[0]>8?(ndx-h0[1])/(now-h0[0])*1000:drag.v;drag.dx=ndx;drag.dy=ndy}// 直近0.1秒の速さ
+fcard.addEventListener('pointermove',dragMove);
+function endDrag(e){if(!drag)return;if(e&&e.type==='pointerup'&&e.clientX!==drag.x+drag.dx)dragMove(e);const d=drag;drag=null;if(d.moved<6){doFlip();return}
+const v=performance.now()-d.t>120?0:d.v,proj=d.dx*DEG+clamp(v*DEG*.3,-170,170);lastRel={dx:d.dx,v,proj};baseY+=Math.round(proj/180)*180;S.vry=clamp(v*DEG,-700,700)}// はじくと勢いで次の面へ
+const showingBack=()=>(((Math.round(baseY/180))%2)+2)%2===1;
 fcard.addEventListener('pointerup',endDrag);fcard.addEventListener('pointercancel',endDrag);
 function doFlip(){baseY+=180;S.vry+=120}
 fflip.onclick=doFlip;fclose.onclick=closeFull;full.addEventListener('click',e=>{if(e.target===full)closeFull()});
 fedit.onclick=()=>{if(fcur)edit(fcur)};
 fdel.onclick=async()=>{const c=fcur;if(!c||!confirm('このカードを削除しますか？'))return;await del(c.id);cards=cards.filter(x=>x!==c);closeFull();render()};
 addEventListener('keydown',e=>{if(e.key==='Escape'){closeFull();closePack();menu.classList.remove('on')}});
-window.__oshi={S,get baseY(){return baseY},get pack(){return P}};
+window.__oshi={S,get baseY(){return baseY},get back(){return showingBack()},get lastRel(){return lastRel},get pack(){return P},get folders(){return folders},get cur(){return {folder:curFolder,own:curOwn}},CR};
 
 // ===== ランダムパック（選ぶ → 自動で開いて3枚が表向きで出てくる） =====
 let P=null;const NP=7;
 const CHEV=d=>`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
 function buildPack(n){const pk=document.createElement('div');pk.className='pk';pk.dataset.i=n;
 pk.innerHTML='<div class="pkin"><div class="foil"><div class="fbody"><div class="fsurf"></div></div></div><div class="flapw"><div class="fflap"><div class="fsurf"></div></div></div></div>';return pk}
-function pick3(){const pool=cards.slice(),out=[];if(!pool.length)return out;if(pool.length>=3){for(let i=0;i<3;i++)out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}else for(let i=0;i<3;i++)out.push(pool[Math.floor(Math.random()*pool.length)]);return out}
+function pick3(){const pool=inFolder(),out=[];if(!pool.length)return out;if(pool.length>=3){for(let i=0;i<3;i++)out.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0])}else for(let i=0;i<3;i++)out.push(pool[Math.floor(Math.random()*pool.length)]);return out}
 function place(el,cx,cy,s,r){const lw=P.lw,lh=lw*88/63;el.style.transform=`translate(${(cx-lw/2).toFixed(1)}px,${(cy-lh/2).toFixed(1)}px) scale(${s.toFixed(4)}) rotate(${r||0}deg)`}
 const T=(f,ms)=>{const p=P;p.timers.push(setTimeout(()=>{if(P===p)f()},ms))};
 function stopP(){if(P){P.timers.forEach(clearTimeout);cancelAnimationFrame(P.raf)}}
 function openPack(){menu.classList.remove('on');pack.classList.add('on');drawPack()}
 function closePack(){pack.classList.remove('on');stopP();P=null;pstage.innerHTML=''}
 function drawPack(){stopP();pstage.innerHTML='';pbtns.classList.remove('on');pglow.classList.remove('on');
-const has=cards.length>0;pempty.classList.toggle('on',!has);if(!has){P=null;return}
+const has=inFolder().length>0;pempty.classList.toggle('on',!has);if(!has){P=null;return}
 const r=pstage.getBoundingClientRect(),W=r.width,H=r.height,pw=Math.min(W*.66,270,H*.42),ph=pw*1.24;// 袋はカードより一回り大きい
 P={phase:'select',W,H,pw,ph,lw:pw,pos:(NP-1)/2,tgt:(NP-1)/2,v:0,packs:[],els:[],timers:[],raf:0,lt:0};
 pstage.style.setProperty('--pw',pw+'px');pstage.style.setProperty('--ph',ph+'px');pstage.style.setProperty('--lw',pw+'px');
@@ -397,7 +521,7 @@ const BK_KEY='oshi-toreka-bk';
 function bkMeta(){try{return JSON.parse(localStorage.getItem(BK_KEY)||'{}')}catch(e){return {}}}
 function setBkMeta(p){localStorage.setItem(BK_KEY,JSON.stringify(Object.assign(bkMeta(),p)))}
 function backupName(){const n=new Date();return 'oshi-toreka-backup-'+n.getFullYear()+String(n.getMonth()+1).padStart(2,'0')+String(n.getDate()).padStart(2,'0')+'.json'}
-function backupBlob(){return new Blob([JSON.stringify({app:'oshi-toreka',version:1,cards})],{type:'application/json'})}
+function backupBlob(){return new Blob([JSON.stringify({app:'oshi-toreka',version:2,cards,folders})],{type:'application/json'})}
 function hideBkToast(){bktoast.classList.remove('on')}
 function markBackedUp(){setBkMeta({at:Date.now(),count:cards.length,snooze:0});hideBkToast()}
 async function doBackup(){menu.classList.remove('on');const blob=backupBlob(),name=backupName(),file=new File([blob],name,{type:'application/json'});
@@ -410,6 +534,6 @@ async function askPersist(){const el=persistst;try{if(navigator.storage&&navigat
 exp.onclick=()=>doBackup();
 bknow.onclick=()=>doBackup();
 bklater.onclick=()=>{setBkMeta({snooze:Date.now()+24*60*60*1000});hideBkToast()};
-imp.onchange=async()=>{const f=imp.files[0];imp.value='';menu.classList.remove('on');if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.cards))throw 0;let n=0;for(const c of d.cards)if(c.id&&c.img){await put(c);n++}cards=await getAll();render();alert(n+'枚のカードを読み込みました');maybeRemind()}catch(e){alert('読み込みに失敗しました。バックアップファイルを確認してください。')}};
-openDB().then(async d=>{db=d;cards=await getAll();render();askPersist();maybeRemind()}).catch(()=>alert('保存領域を開けませんでした（プライベートモードでは保存できない場合があります）'));
+imp.onchange=async()=>{const f=imp.files[0];imp.value='';menu.classList.remove('on');if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.cards))throw 0;let n=0;if(Array.isArray(d.folders))for(const f of d.folders)if(f&&f.id&&f.name)await putFolder(f);folders=await getFolders();for(const c of d.cards)if(c.id&&c.img){await put(c);n++}cards=await getAll();render();alert(n+'枚のカードを読み込みました');maybeRemind()}catch(e){alert('読み込みに失敗しました。バックアップファイルを確認してください。')}};
+dbReady=openDB();dbReady.then(async d=>{db=d;cards=await getAll();folders=await getFolders();render();askPersist();maybeRemind()}).catch(()=>alert('保存領域を開けませんでした（プライベートモードでは保存できない場合があります）'));
 </script></body></html>
