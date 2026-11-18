@@ -247,11 +247,71 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 .slot.new .card{animation:newpop 1.2s cubic-bezier(.2,1.4,.4,1)}
 @keyframes newpop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.04);opacity:1}100%{transform:none}}
 .nodlg dialog:not([open]){display:none}.nodlg dialog[open]{position:fixed;inset:0;margin:auto;z-index:100;height:fit-content;overflow:auto}.nodlg #crop[open]{height:100%}
+
+/* v11: Googleドライブ同期・おすすめ */
+.countrow{display:flex;align-items:center;gap:8px;min-height:20px}
+.syncst{display:inline-flex;align-items:center;gap:5px;font-size:11px;line-height:1;color:var(--sub);padding:4px 9px 4px 7px;border-radius:999px;background:#f6f6f8;margin-top:2px;white-space:nowrap}
+.syncst[hidden]{display:none}
+.recchip{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--pink);padding:5px 10px 5px 8px;border-radius:999px;background:#fff0f5;margin-top:2px;white-space:nowrap}
+.recchip:active{background:#ffe0ec}
+.dot{display:inline-block;flex:none;width:6px;height:6px;border-radius:50%;background:#c7c7cc}
+[data-s="ok"] .dot{background:#34c759}
+[data-s="syncing"] .dot{background:var(--pink2);animation:sdp .8s infinite alternate}
+.syncst[data-s="relogin"],.syncst[data-s="error"]{color:#e5484d;background:#fff0f1}
+[data-s="relogin"] .dot,[data-s="error"] .dot{background:#e5484d}
+@keyframes sdp{to{opacity:.25}}
+#syncdlg .sd-h{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px}
+#syncdlg .sd-h svg{color:var(--pink)}
+#syncdlg p{font-size:13px;color:var(--sub);line-height:1.7;margin:10px 0 0}
+.sd-st{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;background:#f6f6f8;font-size:14px;font-weight:600;margin-top:14px}
+.sd-st .sd-last{margin-left:auto;font-size:11px;color:var(--sub);font-weight:500}
+#syncdlg p.sd-msg{color:#e5484d;margin-top:8px}
+#syncdlg input{font-size:14px}
+.sd-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.sd-btns .pill{width:100%;height:48px}
+.pill.ghost{background:transparent;color:#e5484d}
+.lnk{color:var(--pink);font-size:13px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+#recs{position:fixed;inset:0;z-index:55;background:#fff;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#recs.on{display:block}
+.rhead{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);padding:calc(var(--st) + 14px) 12px 8px 16px}
+.rhead h2{margin:0;flex:1;font-size:24px;font-weight:700;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.rhead h2 svg{color:var(--pink)}
+.rbody{padding:2px 16px calc(var(--sb) + 48px);max-width:760px;margin:auto}
+.rsum{font-size:13px;color:var(--sub)}
+.rsec{margin-top:24px;scroll-margin-top:calc(var(--st) + 64px)}
+.rsec>h3{margin:0 0 10px;font-size:16px;font-weight:700;display:flex;align-items:baseline;gap:8px}
+.rsec>h3 small{font-size:12px;color:var(--sub);font-weight:500}
+.rser{padding:14px 14px 10px;border-radius:18px;background:#fff;box-shadow:0 0 0 1px var(--line),0 4px 14px rgba(0,0,0,.04);margin-bottom:12px}
+.rt{display:flex;align-items:baseline;gap:8px;font-size:15px;font-weight:700}
+.rt .rn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rt .rc2{font-size:12px;color:var(--sub);font-weight:500;white-space:nowrap}
+.rleft{display:inline-block;margin-top:6px;font-size:12px;font-weight:700;color:var(--pink);background:#fff0f5;border-radius:999px;padding:3px 9px}
+.bar{height:8px;border-radius:999px;background:#f2f2f5;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--pink),var(--pink2))}
+.rrow{display:flex;gap:10px;overflow-x:auto;padding:12px 2px 6px;margin:0 -2px;scrollbar-width:none}.rrow::-webkit-scrollbar{display:none}
+.rc{flex:none;width:96px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rc .card{width:96px}
+.rc .face{box-shadow:0 3px 10px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.06)}
+.rc .nm{font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc .sr{font-size:11px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:-4px}
+.mbtn{display:flex;align-items:center;justify-content:center;gap:3px;height:30px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0;background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;white-space:nowrap}
+.mbtn:active{background:#f2f2f5}
+.clist{display:flex;flex-direction:column;gap:14px;padding:14px;border-radius:18px;box-shadow:0 0 0 1px var(--line)}
+.crow .rt{font-size:14px}
+.crow.done .bar i{background:linear-gradient(90deg,#ffb84d,var(--pink))}
+.cbadge{font-size:11px;font-weight:700;color:#fff;background:var(--pink);border-radius:999px;padding:2px 8px}
+.mhead{display:flex;align-items:baseline;gap:8px;font-size:14px;font-weight:700;margin-top:14px}
+.mhead small{font-size:12px;color:var(--sub);font-weight:500}
+.remp{text-align:center;color:var(--sub);line-height:1.8;font-size:14px;padding:48px 16px 20px}
+.remp b{display:block;color:var(--ink);font-size:16px;margin:14px 0 4px}
+.remp svg{margin:auto}
+/* v11b: 端末に保存（詳細のボタンが4つになったので少しだけ間隔をつめる） */
+#full .acts{gap:18px}
 </style></head><body>
 <header>
 <div class="toprow"><h1 class="logo" aria-label="推しトレカアルバム"><svg class="lmark" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><rect x="1" y="1" width="20" height="26" rx="5" fill="#ff4f86"/><path d="M11 18.6c-3.2-2.2-5-4-5-6a2.6 2.6 0 0 1 5-1 2.6 2.6 0 0 1 5 1c0 2-1.8 3.8-5 6z" fill="#fff"/></svg><span class="ltxt">推しトレカアルバム</span></h1>
 <button class="iconbtn" id="menubtn" aria-label="メニュー"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button></div>
-<div class="count" id="count">0枚</div>
+<div class="countrow"><div class="count" id="count">0枚</div><button type="button" class="syncst" id="syncst" data-s="off" hidden aria-label="Googleドライブ同期の状態"><i class="dot"></i><span id="syncstt">未接続</span></button><button type="button" class="recchip" id="recbtn" aria-label="おすすめ"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</button></div>
 <div id="ftabs" role="tablist" aria-label="フォルダ" hidden></div>
 <div id="chips" hidden></div>
 </header>
@@ -259,6 +319,8 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 <button class="mi" id="exp" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>バックアップを保存</button>
 <label class="mi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>バックアップを読み込む<input id="imp" type="file" accept=".json,application/json" hidden></label>
 <button class="mi" id="sortbtn" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg><span id="sortlbl">古い順に並べる</span></button>
+<button class="mi" id="recmi" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</button>
+<button class="mi" id="syncmi" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.5 9.6 4.5 4.5 0 0 0 7 18.5z"/><path d="M9.5 13.5l2 2 3.5-3.8"/></svg>Googleドライブ同期</button>
 <hr><p id="persistst" class="persistst" hidden></p>
 </div>
 <div id="fmenu" role="menu"><button class="mi" id="fren" type="button">名前を変える</button><button class="mi danger" id="fdelf" type="button">フォルダを削除</button></div>
@@ -271,6 +333,7 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 <div class="card" id="fcard"></div>
 <div id="finfo"><b id="fname"></b><span id="fdate"></span><button type="button" class="owntg" id="fown" aria-pressed="false" aria-label="持ってる"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>持ってる</span></button></div>
 <div class="acts"><button class="rbtn" id="fdel" aria-label="削除"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+<button class="rbtn" id="fsave" type="button" aria-label="端末に保存"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
 <button class="rbtn big" id="fflip" aria-label="裏返す"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12A8 8 0 0 1 18.3 7.1"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg></button>
 <button class="rbtn" id="fedit" aria-label="編集"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></button></div>
 </div>
@@ -294,6 +357,16 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 </form></dialog>
 <dialog id="crop" aria-label="トリミング"><div id="cropst"><img id="cimg" alt="" draggable="false"><div id="cframe"></div></div>
 <div class="cbtns"><button type="button" class="pill" id="cropno">キャンセル</button><button type="button" class="pill pri" id="cropok">決定</button></div></dialog>
+<dialog id="syncdlg" aria-label="Googleドライブ同期"><div class="fstart" tabindex="-1" autofocus></div>
+<div class="sd-h"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.5 9.6 4.5 4.5 0 0 0 7 18.5z"/><path d="M9.5 13.5l2 2 3.5-3.8"/></svg>Googleドライブ同期</div>
+<p>PCとスマホで同じアルバムを見られるよ。カードは自分のGoogleドライブの「このアプリ専用の場所」に保存されて、ドライブのほかのファイルは見ないよ。</p>
+<div class="sd-st" id="sdst" data-s="off"><i class="dot"></i><span id="sdstt">未接続</span><span class="sd-last" id="sdlast"></span></div>
+<p class="sd-msg" id="sdmsg" hidden></p>
+<label for="sdcid">OAuthクライアントID</label><input id="sdcid" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="〇〇〇.apps.googleusercontent.com">
+<p>はじめてつなぐ前に、今のカードを <button type="button" class="lnk" id="sdbk">バックアップに保存</button> しておくと安心だよ。</p>
+<div class="sd-btns"><button type="button" class="pill pri" id="sdlogin">Googleでログインして同期</button><button type="button" class="pill ghost" id="sdstop" hidden>同期をやめる</button><button type="button" class="pill" id="sdclose">とじる</button></div>
+</dialog>
+<div id="recs" aria-label="おすすめ"><div class="rhead"><h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</h2><button class="iconbtn" id="rclose" type="button" aria-label="閉じる"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div><div class="rbody" id="rbody"></div></div>
 <div id="toast" role="alert" aria-live="assertive"></div>
 <div id="bktoast" role="status" aria-label="そろそろバックアップしとく？"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff4f86" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span class="msg">バックアップ</span><div class="btns"><button type="button" id="bknow" aria-label="今すぐ保存"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button><button type="button" id="bklater" aria-label="あとで"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div></div>
 <script>
@@ -315,10 +388,13 @@ function saveUI(){try{localStorage.setItem('oshi-toreka-ui',JSON.stringify({sort
 function openDB(){return new Promise((r,j)=>{const q=indexedDB.open('oshi-toreka',3);q.onblocked=()=>toast('ほかのタブ（またはホーム画面のアプリ）を閉じてから開きなおしてね',8000);q.onupgradeneeded=()=>{const d=q.result;if(!d.objectStoreNames.contains('cards'))d.createObjectStore('cards',{keyPath:'id'});if(!d.objectStoreNames.contains('osusume'))d.createObjectStore('osusume');if(!d.objectStoreNames.contains('folders'))d.createObjectStore('folders',{keyPath:'id'})};q.onsuccess=()=>{const d=q.result;d.onversionchange=()=>{d.close();toast('新しいバージョンがあります。ページを開きなおしてね',8000)};r(d)};q.onerror=()=>j(q.error)})}
 let dbReady=null;
 const tx=async(m,f,st='cards')=>{if(!db)await dbReady;return new Promise((r,j)=>{const t=db.transaction(st,m);const q=f(t.objectStore(st));t.oncomplete=()=>r(q&&q.result);t.onerror=()=>j(t.error);t.onabort=()=>j(t.error||new Error('abort'))})};
-const getFolders=async()=>(await tx('readonly',s=>s.getAll(),'folders')).sort((a,b)=>a.created-b.created),putFolder=f=>tx('readwrite',s=>s.put(f),'folders'),delFolder=id=>tx('readwrite',s=>s.delete(id),'folders');
+const getFolders=async()=>(await tx('readonly',s=>s.getAll(),'folders')).sort((a,b)=>a.created-b.created),putFolderRaw=f=>tx('readwrite',s=>s.put(f),'folders'),delFolderRaw=id=>tx('readwrite',s=>s.delete(id),'folders');
+// v11: 端末での変更は updated を付けて保存 → 数秒後に同期（削除はトームストーンを残す）
+const putFolder=f=>{f.updated=Date.now();dropTomb('f',f.id);return putFolderRaw(f).then(r=>{syncSoon();return r})},delFolder=id=>{addTomb('f',id);return delFolderRaw(id).then(r=>{syncSoon();return r})};
 const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2);
 const inFolder=()=>cards.filter(c=>!curFolder||c.folder===curFolder);// いまのフォルダのカード（すべて＝全部）
-const getAll=()=>tx('readonly',s=>s.getAll()),put=c=>tx('readwrite',s=>s.put(c)),del=id=>tx('readwrite',s=>s.delete(id));
+const getAll=()=>tx('readonly',s=>s.getAll()),putRaw=c=>tx('readwrite',s=>s.put(c)),delRaw=id=>tx('readwrite',s=>s.delete(id));
+const put=c=>{c.updated=Date.now();dropTomb('c',c.id);return putRaw(c).then(r=>{syncSoon();return r})},del=id=>{addTomb('c',id);return delRaw(id).then(r=>{syncSoon();return r})};
 function resize(file){return new Promise((r,j)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const k=Math.min(1,1200/Math.max(i.width,i.height));const c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',.85))};i.onerror=j;i.src=u})}
 let toastT=0;function toast(m,ms=4500){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),ms)}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};// 端末の日付（UTCだと朝9時前は前日になる）
@@ -349,7 +425,8 @@ count.textContent=l.length+'枚'+(l.length!==cards.length?` / 全${cards.length}
 sortlbl.textContent=sortDir==='asc'?'新しい順に並べる':'古い順に並べる';
 grid.innerHTML=l.length?'':'<div class="empty"><svg width="64" height="86" viewBox="0 0 72 96" fill="none" stroke="#c7c7cc" stroke-width="2.5" stroke-dasharray="7 6"><rect x="3" y="3" width="66" height="90" rx="9"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:auto"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>';
 for(const c of l){const s=document.createElement('div');s.className='slot';s.dataset.id=c.id;s.dataset.member=c.member||'';s.innerHTML=`<div class="card">${cardHTML(c)}</div>`+(c.owned?`<span class="ownb" aria-label="持ってる">${ICON_CHK}</span>`:'');s.classList.toggle('owned',!!c.owned);
-const cd=s.querySelector('.card');cd.onclick=()=>openFull(c);hover(cd);grid.appendChild(s)}}
+const cd=s.querySelector('.card');cd.onclick=()=>openFull(c);hover(cd);grid.appendChild(s)}
+if(recs.classList.contains('on'))renderRecs()}
 function setLight(el,x,y){el.style.setProperty('--px',(x*100).toFixed(1)+'%');el.style.setProperty('--py',(y*100).toFixed(1)+'%')}
 function hover(cd){cd.addEventListener('pointermove',e=>{const r=cd.getBoundingClientRect();setLight(cd,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)});cd.addEventListener('pointerleave',()=>setLight(cd,.5,.5))}
 function pickFx(v){fxs.innerHTML=FX.map(([k,n])=>`<option value="${k}">${n}</option>`).join('');fxs.value=v;const sw=fxsw.querySelector('.face'),u=()=>{sw.className='face front fx-'+fxs.value};fxs.onchange=u;u()}
@@ -440,7 +517,7 @@ function doFlip(){baseY+=180;S.vry+=120}
 fflip.onclick=doFlip;fclose.onclick=closeFull;full.addEventListener('click',e=>{if(e.target===full)closeFull()});
 fedit.onclick=()=>{if(fcur)edit(fcur)};
 fdel.onclick=async()=>{const c=fcur;if(!c||!confirm('このカードを削除しますか？'))return;await del(c.id);cards=cards.filter(x=>x!==c);closeFull();render()};
-addEventListener('keydown',e=>{if(e.key==='Escape'){closeFull();closePack();menu.classList.remove('on')}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){if(full.classList.contains('on'))closeFull();else closeRecs();closePack();menu.classList.remove('on')}});
 window.__oshi={S,get baseY(){return baseY},get back(){return showingBack()},get lastRel(){return lastRel},get pack(){return P},get folders(){return folders},get cur(){return {folder:curFolder,own:curOwn}},CR};
 
 // ===== ランダムパック（選ぶ → 自動で開いて3枚が表向きで出てくる） =====
@@ -535,5 +612,163 @@ exp.onclick=()=>doBackup();
 bknow.onclick=()=>doBackup();
 bklater.onclick=()=>{setBkMeta({snooze:Date.now()+24*60*60*1000});hideBkToast()};
 imp.onchange=async()=>{const f=imp.files[0];imp.value='';menu.classList.remove('on');if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.cards))throw 0;let n=0;if(Array.isArray(d.folders))for(const f of d.folders)if(f&&f.id&&f.name)await putFolder(f);folders=await getFolders();for(const c of d.cards)if(c.id&&c.img){await put(c);n++}cards=await getAll();render();alert(n+'枚のカードを読み込みました');maybeRemind()}catch(e){alert('読み込みに失敗しました。バックアップファイルを確認してください。')}};
-dbReady=openDB();dbReady.then(async d=>{db=d;cards=await getAll();folders=await getFolders();render();askPersist();maybeRemind()}).catch(()=>alert('保存領域を開けませんでした（プライベートモードでは保存できない場合があります）'));
+// ===== v11: Googleドライブ同期（サーバーなし：Google Identity Services のトークン＋Drive API v3 の appDataFolder） =====
+// クライアントIDはメニュー「Googleドライブ同期」で貼り付けたものが優先。ここに直接書いてもOK（例：'1234-abc.apps.googleusercontent.com'）
+const GOOGLE_CLIENT_ID='';
+const SYNC_KEY='oshi-toreka-sync',SCOPE='https://www.googleapis.com/auth/drive.appdata';
+const DRIVE='https://www.googleapis.com/drive/v3',DRIVE_UP='https://www.googleapis.com/upload/drive/v3';
+// ドライブ上の形：card-<id>.json（画像以外の情報）／img-<id>（画像そのもの）／folder-<id>.json。
+// appProperties に u=更新時刻・d=削除済み(1)・h=画像のハッシュ を持たせて、一覧だけで差分がわかるようにしている
+function sMeta(){try{return JSON.parse(localStorage.getItem(SYNC_KEY)||'{}')}catch(e){return {}}}
+function setSMeta(p){const m=Object.assign(sMeta(),p);try{localStorage.setItem(SYNC_KEY,JSON.stringify(m))}catch(e){}return m}
+const clientId=()=>String(sMeta().clientId||GOOGLE_CLIENT_ID||'').trim();
+const Sy={state:'off',msg:'',prog:'',busy:false,again:false,timer:0,tc:null,tcId:'',gisP:null};
+function addTomb(k,id){const m=sMeta(),t=m.tomb||{};(t[k]=t[k]||{})[id]=Date.now();setSMeta({tomb:t})}
+function dropTomb(k,id){const t=sMeta().tomb;if(t&&t[k]&&t[k][id]){delete t[k][id];setSMeta({tomb:t})}}
+const ukey=x=>+(x&&(x.updated||x.created))||0;
+function hsh(s){s=String(s||'');let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}
+a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return (b>>>0).toString(16).padStart(8,'0')+(a>>>0).toString(16).padStart(8,'0')}
+function d2b(u){u=String(u||'');const i=u.indexOf(','),mime=(/^data:([^;,]+)/.exec(u)||[])[1]||'application/octet-stream';
+if(!/;base64,/.test(u.slice(0,i+1)))return new Blob([decodeURIComponent(u.slice(i+1))],{type:mime});
+const bin=atob(u.slice(i+1)),a=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)a[k]=bin.charCodeAt(k);return new Blob([a],{type:mime})}
+const b2d=b=>new Promise((r,j)=>{const f=new FileReader();f.onload=()=>r(f.result);f.onerror=()=>j(f.error);f.readAsDataURL(b)});
+const tokenOK=()=>{const m=sMeta();return !!(m.tok&&m.exp&&Date.now()<m.exp-60000)};
+// --- ログイン（Google Identity Services）。必要になるまで読み込まない ---
+function loadGIS(){if(window.google&&google.accounts&&google.accounts.oauth2)return Promise.resolve();if(Sy.gisP)return Sy.gisP;
+Sy.gisP=new Promise((r,j)=>{const s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;s.onload=()=>r();s.onerror=()=>{Sy.gisP=null;s.remove();j(new Error('gis'))};document.head.appendChild(s)});return Sy.gisP}
+function tokenClient(){const id=clientId();if(!id||!(window.google&&google.accounts&&google.accounts.oauth2))return null;if(Sy.tc&&Sy.tcId===id)return Sy.tc;
+Sy.tcId=id;Sy.tc=google.accounts.oauth2.initTokenClient({client_id:id,scope:SCOPE,callback:onToken,error_callback:onTokenErr});return Sy.tc}
+function onToken(r){if(!r||r.error||!r.access_token){setSync(sMeta().on?'relogin':'off','ログインできませんでした'+(r&&r.error?'（'+r.error+'）':''));return}
+const o=google.accounts.oauth2;if(o.hasGrantedAllScopes&&!o.hasGrantedAllScopes(r,SCOPE)){setSync(sMeta().on?'relogin':'off','「Googleドライブのアプリデータ」へのアクセスにチェックを入れて、もう一度ログインしてね');return}
+const first=!sMeta().on;setSMeta({on:true,tok:r.access_token,exp:Date.now()+(+r.expires_in||3600)*1000});
+if(first)toast('Googleドライブにつながったよ。この端末とドライブのカードをまとめるね');syncNow()}
+function onTokenErr(e){const t=e&&e.type;setSync(sMeta().on?'relogin':'off',t==='popup_closed'?'':t==='popup_failed_to_open'?'ログイン画面を開けませんでした（ポップアップを許可してね）':'ログインできませんでした')}
+function login(){const tc=tokenClient();if(tc){tc.requestAccessToken();return}
+if(!clientId()){openSyncDlg();return}
+loadGIS().then(()=>{const t=tokenClient();if(t)t.requestAccessToken()}).catch(()=>setSync(sMeta().on?'relogin':'off','Googleにつながりませんでした（ネットを確認してね）'))}
+// --- Drive API（fetch で直接） ---
+async function dreq(url,opt={}){const tok=sMeta().tok;if(!tok||!tokenOK())throw {relogin:1};let r;
+try{r=await fetch(url,Object.assign({},opt,{headers:Object.assign({Authorization:'Bearer '+tok},opt.headers||{})}))}catch(e){throw {net:1}}
+if(r.status===401){setSMeta({tok:'',exp:0});throw {relogin:1}}
+if(!r.ok){let t='';try{t=await r.text()}catch(e){}throw {status:r.status,text:t}}return r}
+async function dlist(){const out=[];let pt='';do{const r=await dreq(DRIVE+'/files?spaces=appDataFolder&pageSize=1000&fields='+encodeURIComponent('nextPageToken,files(id,name,appProperties)')+(pt?'&pageToken='+encodeURIComponent(pt):''));const j=await r.json();out.push(...(j.files||[]));pt=j.nextPageToken||''}while(pt);return out}
+async function dput(fid,name,props,blob){const b='oshi'+Math.random().toString(36).slice(2),meta=fid?{appProperties:props}:{name,parents:['appDataFolder'],appProperties:props};
+const body=new Blob(['--'+b+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(meta)+'\r\n--'+b+'\r\nContent-Type: '+(blob.type||'application/octet-stream')+'\r\n\r\n',blob,'\r\n--'+b+'--\r\n']);
+return (await dreq(DRIVE_UP+'/files'+(fid?'/'+encodeURIComponent(fid):'')+'?uploadType=multipart&fields=id,name,appProperties',{method:fid?'PATCH':'POST',headers:{'Content-Type':'multipart/related; boundary='+b},body})).json()}
+const dget=id=>dreq(DRIVE+'/files/'+encodeURIComponent(id)+'?alt=media');
+const ddel=id=>dreq(DRIVE+'/files/'+encodeURIComponent(id),{method:'DELETE'}).catch(e=>{if(!(e&&e.status===404))throw e});
+const jblob=o=>new Blob([JSON.stringify(o)],{type:'application/json'});
+async function pool(items,k,f){let i=0;const w=async()=>{while(i<items.length)await f(items[i++])};await Promise.all(Array.from({length:Math.min(k,items.length)},w))}
+// --- 同期本体：新しい方が勝ち。はじめては「まとめる」（どちらにしかないものは両方へ） ---
+async function doSync(){if(!db)await dbReady;
+const files=await dlist(),R={c:{},f:{},i:{}},extra=[];
+for(const f of files){const m=/^(card|folder|img)-([^.]+)(\.json)?$/.exec(f.name||'');if(!m)continue;const p=f.appProperties||{},id=m[2],o={fid:f.id,u:+p.u||0,d:p.d==='1',h:p.h||''};
+if(m[1]==='img'){(R.i[id]=R.i[id]||[]).push(o);continue}
+const k=m[1]==='card'?'c':'f',cur=R[k][id];if(!cur)R[k][id]=o;else if(o.u>cur.u){extra.push(cur.fid);R[k][id]=o}else extra.push(o.fid)}// 2台で同時に作った重複は 新しい方だけ残す
+const T=sMeta().tomb||{},tf=T.f||{},tc=T.c||{};let changed=false;
+// フォルダ
+const upF=[];
+for(const id of new Set([...folders.map(f=>f.id),...Object.keys(R.f),...Object.keys(tf)])){const l=folders.find(f=>f.id===id),r=R.f[id],lt=tf[id],lu=l?ukey(l):(lt||0);
+if(r&&r.u>lu){if(r.d){if(l){await delFolderRaw(id);folders=folders.filter(x=>x!==l);changed=true}}
+else{const j=await(await dget(r.fid)).json();if(j&&j.id===id){delete j.deleted;j.updated=r.u;await putFolderRaw(j);folders=folders.filter(x=>x.id!==id).concat(j).sort((a,b)=>a.created-b.created);changed=true}}if(lt)dropTomb('f',id)}
+else if(lu>(r?r.u:0))upF.push({id,l,lt,r});else if(lt&&r&&r.d)dropTomb('f',id)}
+for(const x of upF){if(x.l){const f=x.l,u=ukey(f);await dput(x.r&&x.r.fid,'folder-'+f.id+'.json',{u:String(u),d:'0'},jblob(Object.assign({},f,{updated:u})))}
+else{await dput(x.r&&x.r.fid,'folder-'+x.id+'.json',{u:String(x.lt),d:'1'},jblob({id:x.id,deleted:true}));dropTomb('f',x.id)}}
+// カード
+const down=[],up=[];
+for(const id of new Set([...cards.map(c=>c.id),...Object.keys(R.c),...Object.keys(tc)])){const l=cards.find(c=>c.id===id),r=R.c[id],lt=tc[id],lu=l?ukey(l):(lt||0);
+if(r&&r.u>lu)down.push({id,r,lt});else if(lu>(r?r.u:0))up.push({id,r,lt:l?0:lt});else if(lt&&r&&r.d)dropTomb('c',id)}
+const N=down.length+up.length;let n=0;const tick=()=>{n++;if(N>2)setSync('syncing','',n+'/'+N)};if(N>2)setSync('syncing','','0/'+N);
+await pool(down,3,async x=>{const {id,r}=x;
+if(r.d){const l=cards.find(c=>c.id===id);if(l&&ukey(l)<r.u){await delRaw(id);cards=cards.filter(c=>c!==l);if(fcur===l)closeFull();changed=true}if(x.lt)dropTomb('c',id);return tick()}
+const j=await(await dget(r.fid)).json();if(!j||j.id!==id)return tick();
+let cur=cards.find(c=>c.id===id),img=cur&&cur.img&&hsh(cur.img)===r.h?cur.img:null;
+if(!img){const im=(R.i[id]||[]).find(i=>i.h===r.h);if(!im)return tick();// 画像がまだ届いていない（相手が送信中）→ 次の同期で
+img=await b2d(await(await dget(im.fid)).blob())}
+cur=cards.find(c=>c.id===id);if(cur&&ukey(cur)>=r.u)return tick();// 同期中にこの端末で編集された → こちらを残す
+const c=Object.assign({},j,{img,updated:r.u});delete c.deleted;await putRaw(c);
+if(cur){for(const k of Object.keys(cur))delete cur[k];Object.assign(cur,c);if(fcur===cur){fcard.innerHTML=cardHTML(cur);setFinfo(cur)}}else cards.push(c);
+if(x.lt)dropTomb('c',id);changed=true;tick()});
+await pool(up,3,async x=>{const {id,r}=x,l=cards.find(c=>c.id===id),imgs=R.i[id]||[];
+if(l){const u=ukey(l),h=hsh(l.img);let keep=imgs.find(i=>i.h===h);
+if(!keep){keep=imgs[0]||null;const res=await dput(keep&&keep.fid,'img-'+id,{h,cid:id},d2b(l.img));keep={fid:res.id||(keep&&keep.fid),h}}
+const meta=Object.assign({},l,{updated:u});delete meta.img;
+await dput(r&&r.fid,'card-'+id+'.json',{u:String(u),d:'0',h},jblob(meta));
+for(const i of imgs)if(i.fid!==keep.fid)await ddel(i.fid)}// 古い画像は片づけ
+else if(x.lt){await dput(r&&r.fid,'card-'+id+'.json',{u:String(x.lt),d:'1',h:''},jblob({id,deleted:true}));for(const i of imgs)await ddel(i.fid);dropTomb('c',id)}
+tick()});
+for(const fid of extra)await ddel(fid).catch(()=>{});
+if(changed)render()}
+async function syncNow(){clearTimeout(Sy.timer);const m=sMeta();if(!m.on)return setSync('off');
+if(!navigator.onLine)return setSync('offline');if(!tokenOK())return setSync('relogin');
+if(Sy.busy){Sy.again=true;return}Sy.busy=true;setSync('syncing');
+try{await doSync();setSMeta({last:Date.now()});setSync('ok')}
+catch(e){if(e&&e.relogin)setSync('relogin');else if((e&&e.net)||!navigator.onLine)setSync('offline');else setSync('error',e&&e.status?'Googleドライブでエラーが起きました（'+e.status+'）。少しあとで「今すぐ同期」を押してね':'同期できませんでした。少しあとで「今すぐ同期」を押してね')}
+finally{Sy.busy=false;if(Sy.again){Sy.again=false;syncSoon(400)}}}
+function syncSoon(ms=3000){if(!sMeta().on)return;clearTimeout(Sy.timer);Sy.timer=setTimeout(syncNow,ms)}
+// --- 状態表示（ヘッダーに小さく・設定画面に詳しく） ---
+const SYNC_TXT={off:'未接続',ok:'同期済み',syncing:'同期中',relogin:'再ログインしてね',offline:'オフライン',error:'同期エラー'};
+const fmtTime=t=>{const d=new Date(t);return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`};
+function setSync(s,msg='',prog=''){Sy.state=s;Sy.msg=msg;Sy.prog=prog;const m=sMeta();
+syncst.hidden=!(m.on||clientId());syncst.dataset.s=s;syncstt.textContent=SYNC_TXT[s]+(prog?' '+prog:'');syncst.title=msg||'';
+if(syncdlg.open)renderSyncDlg()}
+function renderSyncDlg(){const m=sMeta(),on=!!m.on;sdst.dataset.s=Sy.state;sdstt.textContent=(SYNC_TXT[Sy.state]||'未接続')+(Sy.prog?' '+Sy.prog:'');
+sdlast.textContent=on&&m.last?'最終 '+fmtTime(m.last):'';sdmsg.hidden=!Sy.msg;sdmsg.textContent=Sy.msg||'';
+sdlogin.textContent=!on?'Googleでログインして同期':(Sy.state==='relogin'?'もう一度ログイン':'今すぐ同期');sdlogin.disabled=Sy.state==='syncing';sdstop.hidden=!on}
+function openSyncDlg(){menu.classList.remove('on');sdcid.value=clientId();renderSyncDlg();if(!syncdlg.open)syncdlg.showModal()}
+const CID_RE=/^[\w.-]+\.apps\.googleusercontent\.com$/;
+function saveCid(){const v=sdcid.value.trim();if(!CID_RE.test(v)){Sy.msg='クライアントIDを貼り付けてね（「.apps.googleusercontent.com」で終わる文字）';renderSyncDlg();return false}
+if(v!==sMeta().clientId){setSMeta({clientId:v,tok:'',exp:0});Sy.tc=null}if(Sy.msg&&/クライアントID/.test(Sy.msg))Sy.msg='';loadGIS().then(()=>tokenClient()).catch(()=>{});setSync(Sy.state==='off'||!sMeta().on?(sMeta().on?'relogin':'off'):Sy.state);return true}
+sdcid.addEventListener('change',()=>{if(CID_RE.test(sdcid.value.trim()))saveCid()});// 正しい形のときだけ先に保存＆準備（ログインボタンを押した瞬間にすぐ開けるように）
+sdlogin.onclick=()=>{if(!saveCid())return;if(sMeta().on&&tokenOK()){syncNow();return}login()};
+sdstop.onclick=()=>{if(!confirm('Googleドライブとの同期をやめますか？\n（この端末のカードも、ドライブに保存したカードも消えません）'))return;
+const tok=sMeta().tok;try{if(tok&&window.google&&google.accounts&&google.accounts.oauth2&&google.accounts.oauth2.revoke)google.accounts.oauth2.revoke(tok,()=>{})}catch(e){}
+clearTimeout(Sy.timer);setSMeta({on:false,tok:'',exp:0,last:0});setSync('off');toast('同期をやめたよ。カードはこの端末に残ってるよ')};
+sdclose.onclick=()=>syncdlg.close();sdbk.onclick=()=>doBackup();
+syncdlg.addEventListener('click',e=>{if(e.target!==syncdlg)return;const r=syncdlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)syncdlg.close()});// 外側（背景）をタップしたときだけ閉じる
+syncmi.onclick=openSyncDlg;
+syncst.onclick=()=>{if(Sy.state==='relogin'&&clientId())login();else openSyncDlg()};// 再ログインはタップ1回で（ポップアップはタップからしか開けない）
+function syncInit(){const m=sMeta();if(clientId())loadGIS().then(()=>tokenClient()).catch(()=>{});
+if(!m.on)return setSync('off');if(!navigator.onLine)return setSync('offline');if(tokenOK())syncNow();else setSync('relogin')}
+addEventListener('online',()=>{if(sMeta().on)syncSoon(500)});addEventListener('offline',()=>{if(sMeta().on&&!Sy.busy)setSync('offline')});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&sMeta().on&&Date.now()-(sMeta().last||0)>60000)syncSoon(300)});
+setInterval(()=>{if(document.visibilityState==='visible'&&sMeta().on&&tokenOK()&&!Sy.busy)syncNow()},3*60*1000);// ほかの端末の変更も ときどき取りに行く
+window.__sync={syncNow,syncSoon,sMeta,get state(){return Sy.state},get busy(){return Sy.busy},get msg(){return Sy.msg}};
+
+// ===== v11: おすすめ（持ってない絵柄・次に集めたいカード） =====
+const mercariURL=c=>'https://jp.mercari.com/search?keyword='+encodeURIComponent([c.member,c.source].map(s=>String(s||'').trim()).filter(Boolean).join(' '));
+const ICON_SEARCH='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>';
+function recCard(c,showSrc){return `<div class="rc" data-id="${esc(c.id)}"><div class="card rcard" role="button" aria-label="${esc(c.member)||'カード'}を見る"><div class="inner">${frontHTML(c)}</div></div><div class="nm">${esc(c.member)||'（名前なし）'}</div>${showSrc?`<div class="sr">${esc(c.source)||'出どころなし'}</div>`:''}<a class="mbtn" href="${esc(mercariURL(c))}" target="_blank" rel="noopener">${ICON_SEARCH}メルカリで探す</a></div>`}
+const byMemDate=(a,b)=>String(a.member||'').localeCompare(String(b.member||''),'ja')||String(a.date||'').localeCompare(String(b.date||''));
+function seriesStats(){const m=new Map();for(const c of cards){const k=String(c.source||'').trim();if(!m.has(k))m.set(k,[]);m.get(k).push(c)}
+return [...m].map(([k,l])=>{const own=l.filter(c=>c.owned).length;return {k,n:l.length,own,miss:l.filter(c=>!c.owned).sort(byMemDate),r:own/l.length}})}
+function renderRecs(){const S=seriesStats(),miss=cards.filter(c=>!c.owned),own=cards.length-miss.length;
+let h=`<div class="rsum">持ってる ${own}枚 / 登録 ${cards.length}枚</div>`;
+const bar=r=>`<div class="bar"><i style="width:${Math.round(r*100)}%"></i></div>`;
+if(!miss.length){h+=`<div class="remp" id="remp"><svg width="56" height="76" viewBox="0 0 72 96" fill="none" stroke="#c7c7cc" stroke-width="2.5" stroke-dasharray="7 6"><rect x="3" y="3" width="66" height="90" rx="9"/></svg><b>${cards.length?'ぜんぶ持ってるよ！':'まだカードがないよ'}</b>ほしいカードを登録するとここに出るよ<br>（登録するときに「持ってる」をオフにしてね）</div>`}
+else{// 次に集めたい：未所持があるシリーズを、コンプ率が高い順（同じなら残りが少ない順）。出どころなしは最後
+const next=S.filter(s=>s.miss.length).sort((a,b)=>(!a.k)-(!b.k)||b.r-a.r||a.miss.length-b.miss.length||b.n-a.n).slice(0,3);
+h+=`<section class="rsec" id="rnext"><h3>次に集めたいカード<small>あと少しでコンプのシリーズ</small></h3>`+next.map(s=>`<div class="rser" data-src="${esc(s.k)}"><div class="rt"><span class="rn">${esc(s.k)||'出どころなし'}</span><span class="rc2">${s.own}/${s.n}枚</span></div>${bar(s.r)}<span class="rleft">あと${s.miss.length}枚でコンプ</span><div class="rrow">${s.miss.map(c=>recCard(c,false)).join('')}</div></div>`).join('')+`</section>`;
+const mm=new Map();for(const c of miss){const k=String(c.member||'').trim();if(!mm.has(k))mm.set(k,[]);mm.get(k).push(c)}
+const mem=[...mm].sort((a,b)=>(!a[0])-(!b[0])||b[1].length-a[1].length||a[0].localeCompare(b[0],'ja'));
+h+=`<section class="rsec" id="rmem"><h3>メンバー別の持ってないカード</h3>`+mem.map(([k,l])=>`<div class="mgrp" data-member="${esc(k)}"><div class="mhead">${esc(k)||'名前なし'}<small>${l.length}枚</small></div><div class="rrow">${l.map(c=>recCard(c,true)).join('')}</div></div>`).join('')+`</section>`}
+if(cards.length){const all=S.slice().sort((a,b)=>(!a.k)-(!b.k)||b.r-a.r||b.n-a.n);
+h+=`<section class="rsec" id="rcomp"><h3>シリーズのコンプ率<small>持ってる数 / 登録数</small></h3><div class="clist">`+all.map(s=>`<div class="crow${s.r>=1?' done':''}" data-src="${esc(s.k)}"><div class="rt"><span class="rn">${esc(s.k)||'出どころなし'}</span>${s.r>=1?'<span class="cbadge">コンプ</span>':''}<span class="rc2">${s.own}/${s.n}（${Math.round(s.r*100)}%）</span></div>${bar(s.r)}</div>`).join('')+`</div></section>`}
+rbody.innerHTML=h}
+rbody.addEventListener('click',e=>{const cd=e.target.closest('.rcard');if(!cd)return;const c=cards.find(x=>x.id===cd.closest('.rc').dataset.id);if(c)openFull(c)});
+function openRecs(){menu.classList.remove('on');renderRecs();recs.classList.add('on');recs.scrollTop=0}
+function closeRecs(){recs.classList.remove('on')}
+recbtn.onclick=openRecs;recmi.onclick=openRecs;rclose.onclick=closeRecs;
+
+// ===== v11b: カードの画像を端末に保存（スマホは共有シート→「画像を保存」、PCはダウンロード） =====
+const IMG_EXT={'image/jpeg':'jpg','image/jpg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif','image/heic':'heic','image/heif':'heif','image/avif':'avif','image/svg+xml':'svg','image/bmp':'bmp'};
+const fnSafe=s=>String(s||'').normalize('NFC').replace(/[\\/:*?"<>|\u0000-\u001f\u007f]/g,'_').replace(/\s+/g,'_').replace(/^[.\s_]+|[.\s]+$/g,'').slice(0,40);
+function saveName(c,mime){const ext=IMG_EXT[mime]||(String(mime).split('/')[1]||'jpg').replace(/[^a-z0-9]/gi,'').slice(0,5)||'jpg';return 'oshi-toreka_'+(fnSafe(c.member)||'card')+'_'+(fnSafe(c.date)||fnSafe(c.id))+'.'+ext}
+async function saveCardImg(c){if(!c||!c.img)return;let blob;try{blob=d2b(c.img)}catch(e){toast('画像を保存できませんでした');return}
+const name=saveName(c,blob.type);
+if(matchMedia('(pointer:coarse)').matches&&navigator.canShare&&navigator.share){try{const f=new File([blob],name,{type:blob.type});if(navigator.canShare({files:[f]})){await navigator.share({files:[f]});toast('保存できたよ',2200);return}}catch(e){if(e&&e.name==='AbortError')return}}// 共有シートを閉じただけなら何もしない。ほかの失敗はダウンロードへ
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast('端末に保存したよ',2200)}
+fsave.onclick=()=>saveCardImg(fcur);
+
+dbReady=openDB();dbReady.then(async d=>{db=d;cards=await getAll();folders=await getFolders();render();askPersist();maybeRemind();syncInit()}).catch(()=>alert('保存領域を開けませんでした（プライベートモードでは保存できない場合があります）'));
 </script></body></html>
