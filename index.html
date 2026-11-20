@@ -41,6 +41,12 @@ h1.logo{display:flex;align-items:center;gap:9px;white-space:nowrap;font-family:i
 #menu .mi{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border-radius:10px;font-size:15px;text-align:left;cursor:pointer}
 #menu .mi:active{background:#f2f2f5}
 #menu hr{border:none;border-top:1px solid var(--line);margin:4px 8px}
+#menu .mi .mit{flex:1}
+#menu .mi .mis{font-size:12px;color:var(--sub);white-space:nowrap}
+#menu .mi .mis.due,#menu .mi .mis[data-s="relogin"],#menu .mi .mis[data-s="error"]{color:var(--pink);font-weight:600}
+#menu .mi .mis[hidden]{display:none}
+#menubtn{position:relative;width:34px;height:34px;margin-right:2px;background:#fff;box-shadow:inset 0 0 0 1px var(--line),0 1px 3px rgba(0,0,0,.05);color:#3a3a3c}#menubtn svg{width:18px;height:18px}#menubtn:active{background:#f2f2f5}
+#menubtn.due::after,#menubtn.alert::after{content:"";position:absolute;top:-1px;right:-1px;width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 2px #fff}
 .persistst{margin:6px 12px 8px;font-size:11px;color:var(--sub);line-height:1.4}
 /* grid */
 main{padding:6px 12px calc(var(--sb) + 120px);display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:1100px;margin:auto}
@@ -218,7 +224,7 @@ background:
 #fmenu.on{display:block}#fmenu .mi{display:block;width:100%;padding:11px 12px;border-radius:10px;font-size:15px;text-align:left}#fmenu .mi:active{background:#f2f2f5}#fmenu .danger{color:#e5484d}
 .slot{position:relative}
 .ownb{position:absolute;right:6px;bottom:6px;width:16px;height:16px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.18),0 0 0 1.5px #fff;pointer-events:none;z-index:2}
-.owntg{display:inline-flex;align-items:center;gap:4px;align-self:center;padding:5px 11px 5px 8px;border-radius:999px;font-size:12px;color:var(--sub);box-shadow:inset 0 0 0 1px var(--line);background:#fff}
+.owntg[hidden]{display:none}.owntg{display:inline-flex;align-items:center;gap:4px;align-self:center;padding:5px 11px 5px 8px;border-radius:999px;font-size:12px;color:var(--sub);box-shadow:inset 0 0 0 1px var(--line);background:#fff}
 .owntg svg{opacity:.35}.owntg[aria-pressed="true"]{background:var(--pink);color:#fff;box-shadow:none}.owntg[aria-pressed="true"] svg{opacity:1}
 .ownrow{display:flex;align-items:center;gap:10px;margin-top:14px}
 dialog .ownrow label{display:inline;margin:0;font-size:15px;color:var(--ink)}
@@ -309,16 +315,16 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 #full .acts{gap:18px}
 
 /* v13: ヘッダー整理（フォルダ＝タブ／操作＝ボタン／選択＝シートの中だけ） */
-.ftrow{display:flex;align-items:center;margin:8px -16px 0;border-bottom:1px solid var(--line)}
+.ftrow{margin:8px -16px 0}
 .ftrow[hidden]{display:none}
-.ftrow #ftabs{flex:1;min-width:0;margin:0;border-bottom:none;padding:0 18px 0 12px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 22px),transparent)}
-.fadd{flex:none;width:32px;height:32px;margin:0 12px 2px 2px;border-radius:50%;display:grid;place-items:center;color:#6e6e73;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
-.fadd:active{background:#f2f2f5}
+.ftrow #ftabs{margin:0}
+
+
 header .countrow{margin-top:10px;min-height:32px}
 header .countrow .count{margin-top:0;flex:none;white-space:nowrap}
 header .countrow .recchip{flex:none}
 header .countrow .syncst,header .countrow .recchip{margin-top:0}
-.sortw{display:inline-flex;align-items:center;flex:none;height:32px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:#3a3a3c;min-width:0;flex:0 1 auto}
+.sortw{margin-left:auto;display:inline-flex;align-items:center;flex:none;height:32px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:#3a3a3c;min-width:0;flex:0 1 auto}
 .sortw[hidden]{display:none}
 .sortb{display:inline-flex;align-items:center;gap:5px;height:100%;padding:0 13px 0 11px;font-size:13px;letter-spacing:0;white-space:nowrap;min-width:0}
 .sortb span{overflow:hidden;text-overflow:ellipsis}
@@ -341,6 +347,12 @@ header .countrow .syncst,header .countrow .recchip{margin-top:0}
 .seg{display:flex;gap:3px;padding:3px;border-radius:999px;background:#f2f2f5}
 .seg button{flex:1;min-width:0;height:34px;border-radius:999px;font-size:13px;color:#3a3a3c;letter-spacing:0;white-space:nowrap}
 .seg button[aria-checked="true"]{background:var(--ink);color:#fff;font-weight:700}
+.stseg{margin-top:2px}.stseg button[data-v="own"][aria-checked="true"]{background:var(--pink)}
+.backin .stb{align-self:flex-start;margin-bottom:10px;padding:5px 12px;border-radius:999px;font-size:1.05em;font-weight:800;letter-spacing:.04em;text-shadow:none}
+.backin .stb.own{background:#fff;color:var(--pink);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.backin .stb.want{background:rgba(255,255,255,.18);color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9)}
+.face.back.lt .backin .stb.own{background:var(--pink);color:#fff}
+.face.back.lt .backin .stb.want{background:transparent;color:var(--pink);box-shadow:inset 0 0 0 1.5px var(--pink)}
 .mrows{border-radius:14px;background:#f6f6f8;overflow:hidden}
 .mrow{display:flex;align-items:center;gap:8px;width:100%;padding:12px 14px;font-size:15px;text-align:left}
 .mrow+.mrow{box-shadow:inset 0 1px 0 #ececf0}
@@ -361,27 +373,26 @@ header .countrow .syncst,header .countrow .recchip{margin-top:0}
 .sgrab{display:none}}
 @media (prefers-reduced-motion:reduce){.sheet,.sbg{transition:none}}
 /* v13: パックのタップ案内（真ん中のパックの下に固定。操作は受けない） */
-.ptap{position:absolute;z-index:150;pointer-events:none;transform:translate(-50%,-50%);transition:opacity .2s}
-.ptap .pf{position:relative;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.94);box-shadow:0 4px 16px rgba(0,0,0,.12);display:grid;place-items:center;color:var(--pink)}
-.ptap .pf::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px rgba(255,79,134,.55);animation:ptring 1.6s ease-out infinite}
+.ptap{position:absolute;z-index:150;pointer-events:none;transform:translate(-50%,-50%);transition:opacity .2s}.ptap:not(.off),.ptxt:not(.off){transition:opacity .6s}
+.ptap .pf{position:relative;width:52px;height:52px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(255,79,134,.4);animation:ptbreath 2.2s ease-in-out infinite}.ptap .pf svg{position:relative;z-index:1;margin:2px 0 0 2px}
+.ptap .pf::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(255,79,134,.35);animation:ptring 2.2s ease-out infinite}
 .ptxt{position:absolute;z-index:150;pointer-events:none;transform:translateX(-50%);font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.06em;white-space:nowrap;transition:opacity .2s}
 .ptap.off,.ptxt.off{opacity:0}
-@keyframes ptring{0%{transform:scale(1);opacity:1}100%{transform:scale(1.7);opacity:0}}
-@media (prefers-reduced-motion:reduce){.ptap .pf::before{animation:none;transform:scale(1.18);opacity:.6}}
+@keyframes ptring{0%{transform:scale(.45);opacity:.9}100%{transform:scale(1.9);opacity:0}}@keyframes ptbreath{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.ptap .pf,.ptap .pf::before{animation:none}.ptap .pf::before{transform:scale(1.25);opacity:.5}}
 </style></head><body>
 <header>
 <div class="toprow"><h1 class="logo" aria-label="推しポケ"><svg class="lmark" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><rect x="1" y="1" width="20" height="26" rx="5" fill="#ff4f86"/><path d="M11 18.6c-3.2-2.2-5-4-5-6a2.6 2.6 0 0 1 5-1 2.6 2.6 0 0 1 5 1c0 2-1.8 3.8-5 6z" fill="#fff"/></svg><span class="ltxt">推しポケ</span></h1>
 <button class="iconbtn" id="menubtn" aria-label="メニュー"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button></div>
-<div class="ftrow" id="ftrow" hidden><div id="ftabs" role="tablist" aria-label="フォルダ"></div><button type="button" class="fadd" id="fadd" aria-label="新しいフォルダ" title="新しいフォルダ"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h3.6l2 2.2h7.4a2 2 0 0 1 2 2v7.8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg></button></div>
-<div class="countrow"><div class="count" id="count">0枚</div><button type="button" class="syncst" id="syncst" data-s="off" hidden aria-label="Googleドライブ同期の状態"><i class="dot"></i><span id="syncstt">未接続</span></button><button type="button" class="recchip" id="recbtn" aria-label="おすすめ"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</button><span class="sortw" id="sortw" hidden><button type="button" class="sortb" id="sortb" aria-haspopup="dialog"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg><span id="sortbl">新しい順</span></button><button type="button" class="sortx" id="sortx" aria-label="絞り込みを解除"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div>
+<div class="ftrow" id="ftrow" hidden><div id="ftabs" role="tablist" aria-label="フォルダ"></div></div>
+<div class="countrow"><div class="count" id="count">0枚</div><button type="button" class="syncst" id="syncst" data-s="off" hidden aria-label="Googleドライブ同期の状態"><i class="dot"></i><span id="syncstt">未接続</span></button><span class="sortw" id="sortw" hidden><button type="button" class="sortb" id="sortb" aria-haspopup="dialog"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg><span id="sortbl">新しい順</span></button><button type="button" class="sortx" id="sortx" aria-label="絞り込みを解除"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div>
 </header>
-<div id="ssh" aria-hidden="true"><div class="sbg" id="sbg"></div><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="並び順と絞り込み"><div class="sgrab"></div><div class="ssec"><div class="shd">並び順</div><div class="seg" id="segsort" role="radiogroup"><button type="button" data-v="desc">新しい順</button><button type="button" data-v="asc">古い順</button><button type="button" data-v="member">メンバー順</button></div></div><div class="ssec"><div class="shd">持ってるカード</div><div class="seg" id="segown" role="radiogroup"><button type="button" data-v="">すべて</button><button type="button" data-v="y">持ってるだけ</button><button type="button" data-v="n">持ってないだけ</button></div></div><div class="ssec" id="smemsec"><div class="shd">メンバー</div><div class="mrows" id="mrows"></div></div><div class="sfoot"><button type="button" class="sreset" id="sreset">リセット</button><button type="button" class="pill pri" id="sok">OK</button></div></div></div>
+<div id="ssh" aria-hidden="true"><div class="sbg" id="sbg"></div><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="並び順と絞り込み"><div class="sgrab"></div><div class="ssec"><div class="shd">並び順</div><div class="seg" id="segsort" role="radiogroup"><button type="button" data-v="desc">新しい順</button><button type="button" data-v="asc">古い順</button><button type="button" data-v="member">メンバー順</button></div></div><div class="ssec"><div class="shd">持ってるカード</div><div class="seg" id="segown" role="radiogroup"><button type="button" data-v="">すべて</button><button type="button" data-v="y">持ってる！</button><button type="button" data-v="w">欲しい！</button></div></div><div class="ssec" id="smemsec"><div class="shd">メンバー</div><div class="mrows" id="mrows"></div></div><div class="sfoot"><button type="button" class="sreset" id="sreset">リセット</button><button type="button" class="pill pri" id="sok">OK</button></div></div></div>
 <div id="menu" role="menu">
-<button class="mi" id="exp" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>バックアップを保存</button>
+<button class="mi" id="exp" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="mit">バックアップを保存</span><span class="mis due" id="expdue" hidden>そろそろ保存しよう</span></button>
 <label class="mi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>バックアップを読み込む<input id="imp" type="file" accept=".json,application/json" hidden></label>
-<button class="mi" id="sortbtn" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg><span id="sortlbl">並び順・絞り込み</span></button>
-<button class="mi" id="recmi" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</button>
-<button class="mi" id="syncmi" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.5 9.6 4.5 4.5 0 0 0 7 18.5z"/><path d="M9.5 13.5l2 2 3.5-3.8"/></svg>Googleドライブ同期</button>
+
+<button class="mi" id="syncmi" type="button"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.5 9.6 4.5 4.5 0 0 0 7 18.5z"/><path d="M9.5 13.5l2 2 3.5-3.8"/></svg><span class="mit">Googleドライブ同期</span><span class="mis" id="syncmis"></span></button>
 <hr><p id="persistst" class="persistst" hidden></p>
 </div>
 <div id="fmenu" role="menu"><button class="mi" id="fren" type="button">名前を変える</button><button class="mi danger" id="fdelf" type="button">フォルダを削除</button></div>
@@ -392,7 +403,7 @@ header .countrow .syncst,header .countrow .recchip{margin-top:0}
 </div>
 <div id="full"><button class="iconbtn" id="fclose" aria-label="閉じる"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
 <div class="card" id="fcard"></div>
-<div id="finfo"><b id="fname"></b><span id="fdate"></span><button type="button" class="owntg" id="fown" aria-pressed="false" aria-label="持ってる"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>持ってる</span></button></div>
+<div id="finfo"><b id="fname"></b><span id="fdate"></span><button type="button" class="owntg" id="fown" hidden aria-pressed="false" aria-label="持ってる"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>持ってる</span></button></div>
 <div class="acts"><button class="rbtn" id="fdel" aria-label="削除"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
 <button class="rbtn" id="fsave" type="button" aria-label="端末に保存"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
 <button class="rbtn big" id="fflip" aria-label="裏返す"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12A8 8 0 0 1 18.3 7.1"/><path d="M18.5 3v4.2h-4.2M5.5 21v-4.2h4.2"/></svg></button>
@@ -410,7 +421,7 @@ header .countrow .syncst,header .countrow .recchip{margin-top:0}
 <label>日付</label><input name="date" type="date">
 <label>自由メモ</label><textarea name="memo" rows="3"></textarea>
 <label>フォルダ</label><select name="folder" id="fsel"></select>
-<div class="ownrow"><input type="checkbox" name="owned" id="fowned" class="sw"><label for="fowned">持ってる</label></div>
+<label>ラベル</label><div class="seg stseg" id="segst" role="radiogroup" aria-label="ラベル"><button type="button" data-v="">なし</button><button type="button" data-v="want">欲しい！</button><button type="button" data-v="own">持ってる！</button></div>
 <label>裏の色</label><div class="bksw" id="bksw" role="radiogroup" aria-label="カードの裏の色"></div>
 <label>キラキラの種類</label><div class="fxsel"><select name="fx" id="fxs"></select><div class="fxsw" id="fxsw"><div class="face front"><div class="base"></div><div class="holo"></div><div class="glit"></div><div class="shine"></div></div></div></div>
 <div class="fbtns"><button value="cancel" class="pill" formnovalidate>キャンセル</button><button value="ok" class="pill pri" id="okb">保存</button></div>
@@ -461,7 +472,12 @@ const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth
 const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmtDate=d=>{const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||'');return m?`${+m[1]}.${+m[2]}.${+m[3]}`:(d||'')};
 function frontHTML(c){return `<div class="face front fx-${fxOf(c)}"><img src="${c.img}" alt="" draggable="false"><div class="holo"></div><div class="glit"></div><div class="shine"></div></div>`}
-function cardHTML(c){return `<div class="inner">${frontHTML(c)}<div class="face back bk-${backOf(c)}${LIGHT_BACKS.has(backOf(c))?' lt':''}"><div class="backin"><b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="bshine"></div></div></div>`}
+const ST_TXT={own:'持ってる！',want:'欲しい！'};
+const stOf=c=>c.owned?'own':c.want?'want':'';// ラベル：持ってる／欲しい／なし（古いカードは owned だけ）
+function setSt(c,v){c.owned=v==='own';c.want=v==='want'}
+function pickSt(v){segst.dataset.v=v;segst.querySelectorAll('button').forEach(b=>b.setAttribute('aria-checked',b.dataset.v===v))}
+const ownMatch=c=>!curOwn||(curOwn==='y'?!!c.owned:curOwn==='w'?stOf(c)==='want':!c.owned);
+function cardHTML(c){return `<div class="inner">${frontHTML(c)}<div class="face back bk-${backOf(c)}${LIGHT_BACKS.has(backOf(c))?' lt':''}"><div class="backin">${stOf(c)?`<span class="stb ${stOf(c)}">${ST_TXT[stOf(c)]}</span>`:''}<b>${esc(c.member)||'（名前なし）'}</b><span class="lb">日付</span><span>${esc(c.date)||'-'}</span><span class="lb">メモ</span><span class="memo">${esc(c.memo)||'-'}</span></div><div class="bshine"></div></div></div>`}
 const byDate=(a,b)=>(a.date||'')<(b.date||'')?-1:(a.date||'')>(b.date||'')?1:a.created-b.created;
 const SORT_NAME={desc:'新しい順',asc:'古い順',member:'メンバー順'},OWN_NAME={y:'持ってるだけ',n:'持ってないだけ'};
 function sorted(l){if(sortDir==='member'){const k=c=>String(c.member||'').trim();return l.sort((a,b)=>(!k(a))-(!k(b))||k(a).localeCompare(k(b),'ja')||-byDate(a,b))}// メンバー順：名前（五十音）→ 同じ人は新しい順。名前なしは最後
@@ -473,15 +489,16 @@ function renderTabs(){if(curFolder&&!folders.some(f=>f.id===curFolder))curFolder
 ftrow.hidden=!cards.length&&!folders.length;ftabs.innerHTML='';
 const tab=(id,name)=>{const b=document.createElement('button');b.type='button';b.className='ftab'+(id===curFolder?' on':'');b.setAttribute('role','tab');b.setAttribute('aria-selected',id===curFolder);b.dataset.f=id;b.textContent=name;
 b.onclick=()=>{if(b._lp)return;curFolder=id;saveUI();render()};if(id)longPress(b,()=>openFmenu(id,b));ftabs.appendChild(b)};
-tab('','すべて');folders.forEach(f=>tab(f.id,f.name))}
+tab('','すべて');folders.forEach(f=>tab(f.id,f.name));
+const add=document.createElement('button');add.type='button';add.className='ftab add';add.id='fadd';add.setAttribute('aria-label','新しいフォルダ');add.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';add.onclick=async()=>{const f=await newFolder();if(f){curFolder=f.id;saveUI();render()}};ftabs.appendChild(add)}
 function render(){renderTabs();const base=inFolder(),ms=curMs();
 if(curMember&&!ms.includes(curMember))curMember='';
 renderSortBtn(ms);if(ssh.classList.contains('on'))renderSheet();
 mlist.innerHTML=ms.map(m=>`<option value="${esc(m)}">`).join('');
-const l=sorted(base.filter(c=>(!curMember||c.member===curMember)&&(!curOwn||(curOwn==='y')===!!c.owned)));
+const l=sorted(base.filter(c=>(!curMember||c.member===curMember)&&ownMatch(c)));
 count.textContent=l.length+'枚'+(l.length!==cards.length?` / 全${cards.length}枚`:'');
 grid.innerHTML=l.length?'':'<div class="empty"><svg width="64" height="86" viewBox="0 0 72 96" fill="none" stroke="#c7c7cc" stroke-width="2.5" stroke-dasharray="7 6"><rect x="3" y="3" width="66" height="90" rx="9"/></svg><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c7c7cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:auto"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>';
-for(const c of l){const s=document.createElement('div');s.className='slot';s.dataset.id=c.id;s.dataset.member=c.member||'';s.innerHTML=`<div class="card">${cardHTML(c)}</div>`+(c.owned?`<span class="ownb" aria-label="持ってる">${ICON_CHK}</span>`:'');s.classList.toggle('owned',!!c.owned);
+for(const c of l){const s=document.createElement('div');s.className='slot';s.dataset.id=c.id;s.dataset.member=c.member||'';s.innerHTML=`<div class="card">${cardHTML(c)}</div>`;s.classList.toggle('owned',!!c.owned);
 const cd=s.querySelector('.card');cd.onclick=()=>openFull(c);hover(cd);grid.appendChild(s)}
 if(recs.classList.contains('on'))renderRecs()}
 function setLight(el,x,y){el.style.setProperty('--px',(x*100).toFixed(1)+'%');el.style.setProperty('--py',(y*100).toFixed(1)+'%')}
@@ -495,7 +512,7 @@ function fillFolders(v){fsel.innerHTML='<option value="">フォルダなし</opt
 fsel.onchange=async()=>{if(fsel.value!=='+'){fsel.dataset.v=fsel.value;return}const f=await newFolder();fillFolders(f?f.id:fsel.dataset.v);if(f)renderTabs()};
 let pendImg=null;
 dcrop.onclick=async()=>{const u=await cropImage(pendImg||dprev.src);if(u){pendImg=u;dprev.src=u}};
-function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;pendImg=null;dprev.src=c.img;for(const k of['member','date','memo'])form[k].value=c[k]||'';form.owned.checked=!!c.owned;fillFolders(c.folder||'');pickFx(fxOf(c));pickBack(backOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','memo'])c[k]=form[k].value.trim();c.fx=fxs.value;c.back=bksw.dataset.v||'pink';c.owned=form.owned.checked;c.folder=fsel.value==='+'?'':fsel.value;if(pendImg)c.img=pendImg;r(true)}})}
+function askInfo(c,title){return new Promise(r=>{dtitle.textContent=title;pendImg=null;dprev.src=c.img;for(const k of['member','date','memo'])form[k].value=c[k]||'';pickSt(stOf(c));fillFolders(c.folder||'');pickFx(fxOf(c));pickBack(backOf(c));dlg.returnValue='';dlg.showModal();dlg.onclose=()=>{if(dlg.returnValue!=='ok')return r(false);for(const k of['member','date','memo'])c[k]=form[k].value.trim();c.fx=fxs.value;c.back=bksw.dataset.v||'pink';setSt(c,segst.dataset.v||'');c.folder=fsel.value==='+'?'':fsel.value;if(pendImg)c.img=pendImg;r(true)}})}
 async function edit(c){if(await askInfo(c,'カードを編集')){try{await put(c)}catch(e){toast('保存できませんでした');return}reveal(c);if(fcur===c){fcard.innerHTML=cardHTML(c);setFinfo(c)}}}
 file.onchange=async()=>{const fs=[...file.files];file.value='';const last=cards.slice().sort((a,b)=>b.created-a.created)[0];let shown=null;
 for(let i=0;i<fs.length;i++){let img;const u=URL.createObjectURL(fs[i]);try{img=await cropImage(u)}catch(e){img=null;toast(e&&e.msg||'この画像は読み込めませんでした（別の写真で試してね）')}finally{URL.revokeObjectURL(u)}if(!img)continue;// トリミング → キャンセル/失敗ならその1枚はやめる
@@ -503,7 +520,7 @@ const c={id:newId(),created:Date.now(),img,owned:false,folder:curFolder,member:l
 if(await askInfo(c,fs.length>1?`新しいカード (${i+1}/${fs.length})`:'新しいカード')){try{await put(c)}catch(e){toast('保存できませんでした（空き容量を確認してね）');continue}cards.push(c);reveal(c);shown=c}}
 if(shown)flash(shown)};
 // 保存したカードが 絞り込みで隠れないように（隠れるなら絞り込みを外す）
-function reveal(c){if(curOwn&&(curOwn==='y')!==!!c.owned)curOwn='';if(curMember&&c.member!==curMember)curMember='';if(curFolder&&c.folder!==curFolder){curFolder=c.folder||'';saveUI()}render()}
+function reveal(c){if(!ownMatch(c))curOwn='';if(curMember&&c.member!==curMember)curMember='';if(curFolder&&c.folder!==curFolder){curFolder=c.folder||'';saveUI()}render()}
 function flash(c){const s=grid.querySelector(`.slot[data-id="${c.id}"]`);if(!s)return;s.scrollIntoView({block:'center',behavior:'smooth'});s.classList.remove('new');s.offsetWidth;s.classList.add('new')}
 // ===== トリミング（カードと同じ縦横比の枠。1本指で移動・2本指/ホイールで拡大） =====
 const CA=88/63,CR={p:new Map()};
@@ -544,10 +561,10 @@ document.addEventListener('pointerdown',e=>{if(fmenu.classList.contains('on')&&!
 // メニュー
 menubtn.onclick=e=>{e.stopPropagation();menu.classList.toggle('on')};
 document.addEventListener('click',e=>{if(menu.classList.contains('on')&&!menu.contains(e.target))menu.classList.remove('on')});
-sortbtn.onclick=()=>{menu.classList.remove('on');openSheet()};
+
 // ===== v13: 並び順・絞り込み（ボタン1つ → シート） =====
 const curMs=()=>[...new Set(inFolder().map(c=>c.member).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ja'));
-const OWN_SHORT={y:'持ってる',n:'持ってない'};// ボタンは短く（シートの中は「〜だけ」）
+const OWN_SHORT={y:'持ってる',w:'欲しい',n:'持ってない'};// ボタンは短く（シートの中は「〜だけ」）
 function filterLabel(){return [curMember,OWN_SHORT[curOwn]].filter(Boolean).join('・')}
 function renderSortBtn(){sortw.hidden=!cards.length;const f=filterLabel();sortw.classList.toggle('on',!!f);sortbl.textContent=f||SORT_NAME[sortDir];sortb.title=f?f+'（'+SORT_NAME[sortDir]+'）':SORT_NAME[sortDir];sortb.setAttribute('aria-label','並び順・絞り込み：'+(f?f+'・':'')+SORT_NAME[sortDir])}
 function renderSheet(){const base=inFolder(),ms=curMs();
@@ -564,10 +581,11 @@ function closeSheet(){ssh.classList.remove('on');ssh.setAttribute('aria-hidden',
 sortb.onclick=openSheet;sortx.onclick=()=>{curOwn='';curMember='';render()};
 sbg.onclick=closeSheet;sok.onclick=closeSheet;
 segsort.onclick=e=>{const b=e.target.closest('button');if(!b)return;sortDir=b.dataset.v;saveUI();render()};
+segst.onclick=e=>{const b=e.target.closest('button');if(b)pickSt(b.dataset.v)};
 segown.onclick=e=>{const b=e.target.closest('button');if(!b)return;curOwn=b.dataset.v;render()};
 mrows.onclick=e=>{const b=e.target.closest('.mrow');if(!b)return;curMember=b.dataset.m;render()};
 sreset.onclick=()=>{sortDir='desc';curOwn='';curMember='';saveUI();render()};
-fadd.onclick=async()=>{const f=await newFolder();if(f){curFolder=f.id;saveUI();render()}};
+
 
 // ===== 詳細：ばね物理で余韻のある動き（傾き＋ドラッグ） =====
 const S={rx:0,ry:0,tx:0,ty:0,sc:1,vrx:0,vry:0,vtx:0,vty:0,vsc:0};
@@ -625,7 +643,7 @@ layoutCar();P.raf=requestAnimationFrame(carLoop)}
 function carX(d){const a=Math.abs(d),sp=P.pw*.62;return Math.sign(d)*(a<=1?a*sp:sp+(a-1)*P.pw*.36)}
 function layoutCar(){const {W,H,pw,ph}=P,cy=H*.42;P.packs.forEach((pk,i)=>{const d=i-P.pos,a=Math.abs(d),s=.88*(1-Math.min(a,2.2)*.16),ry=clamp(-d*32,-58,58),op=a>2.4?Math.max(0,1-(a-2.4)*2):1;
 pk.style.transform=`translate(${(W/2+carX(d)-pw/2).toFixed(1)}px,${(cy-ph/2).toFixed(1)}px) perspective(900px) rotateY(${ry.toFixed(2)}deg) scale(${s.toFixed(4)})`;pk.style.opacity=op;pk.style.zIndex=100-Math.round(a*10);pk.classList.toggle('center',a<.5)});
-if(P.hint){const off=P.phase!=='select'||P.drag&&P.pt&&P.pt.moved>=8||Math.abs(P.pos-Math.round(P.pos))>.12;P.hint.forEach(h=>h.classList.toggle('off',off))}// 動かしている間・開封中は隠す
+if(P.hint){const now=performance.now(),mv=P.phase!=='select'||P.drag&&P.pt&&P.pt.moved>=8||Math.abs(P.pos-Math.round(P.pos))>.12;if(mv||!P.still)P.still=mv?0:now;const off=mv||now-P.still<1800;P.hint.forEach(h=>h.classList.toggle('off',off))}// 動かしている間・開封中は隠す
 P.navl.classList.toggle('off',P.tgt<=0);P.navr.classList.toggle('off',P.tgt>=NP-1)}
 function carLoop(t){if(!P||P.phase!=='select')return;const dt=P.lt?Math.min(.05,(t-P.lt)/1000):1/60;P.lt=t;
 if(!P.drag)for(let k=0;k<4;k++){const a=170*(P.tgt-P.pos)-21*P.v;P.v+=a*dt/4;P.pos+=P.v*dt/4}
@@ -682,14 +700,14 @@ function bkMeta(){try{return JSON.parse(localStorage.getItem(BK_KEY)||'{}')}catc
 function setBkMeta(p){localStorage.setItem(BK_KEY,JSON.stringify(Object.assign(bkMeta(),p)))}
 function backupName(){const n=new Date();return 'oshi-toreka-backup-'+n.getFullYear()+String(n.getMonth()+1).padStart(2,'0')+String(n.getDate()).padStart(2,'0')+'.json'}
 function backupBlob(){return new Blob([JSON.stringify({app:'oshi-toreka',version:2,cards,folders})],{type:'application/json'})}
-function hideBkToast(){bktoast.classList.remove('on')}
+function hideBkToast(){bktoast.classList.remove('on');expdue.hidden=true;menubtn.classList.remove('due')}
 function markBackedUp(){setBkMeta({at:Date.now(),count:cards.length,snooze:0});hideBkToast()}
 async function doBackup(){menu.classList.remove('on');const blob=backupBlob(),name=backupName(),file=new File([blob],name,{type:'application/json'});
 try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'推しポケのバックアップ',text:'推しポケのバックアップ'});markBackedUp();return}}
 catch(e){if(e&&e.name==='AbortError')return}
 const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);markBackedUp()}
 function shouldRemind(){if(cards.length<1)return false;const m=bkMeta(),now=Date.now();if(m.snooze&&now<m.snooze)return false;if(!m.at)return true;if(now-m.at>=7*24*60*60*1000)return true;if(cards.length>=(m.count||0)+5)return true;return false}
-function maybeRemind(){if(shouldRemind())bktoast.classList.add('on');else hideBkToast()}
+function maybeRemind(){if(shouldRemind()){expdue.hidden=false;menubtn.classList.add('due')}else hideBkToast()}
 async function askPersist(){const el=persistst;try{if(navigator.storage&&navigator.storage.persist){const p=await navigator.storage.persist();el.hidden=false;el.textContent=p?'この端末にしっかり保存中':'通常の保存（空き容量が減ると消えることがあります）'}else{el.hidden=false;el.textContent='通常の保存（空き容量が減ると消えることがあります）'}}catch(e){el.hidden=false;el.textContent='通常の保存（空き容量が減ると消えることがあります）'}}
 exp.onclick=()=>doBackup();
 bknow.onclick=()=>doBackup();
@@ -793,7 +811,7 @@ function syncSoon(ms=3000){if(!sMeta().on)return;clearTimeout(Sy.timer);Sy.timer
 const SYNC_TXT={off:'未接続',ok:'同期済み',syncing:'同期中',relogin:'再ログインしてね',offline:'オフライン',error:'同期エラー'};
 const fmtTime=t=>{const d=new Date(t);return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`};
 function setSync(s,msg='',prog=''){Sy.state=s;Sy.msg=msg;Sy.prog=prog;const m=sMeta();
-syncst.hidden=!(m.on||clientId());syncst.dataset.s=s;syncstt.textContent=SYNC_TXT[s]+(prog?' '+prog:'');syncst.title=msg||'';
+syncst.hidden=true;syncmis.textContent=(m.on||clientId())?SYNC_TXT[s]+(prog?' '+prog:''):'';syncmis.dataset.s=s;menubtn.classList.toggle('alert',!!m.on&&(s==='relogin'||s==='error'));syncst.dataset.s=s;syncstt.textContent=SYNC_TXT[s]+(prog?' '+prog:'');syncst.title=msg||'';
 if(syncdlg.open)renderSyncDlg()}
 function renderSyncDlg(){const m=sMeta(),on=!!m.on;sdst.dataset.s=Sy.state;sdstt.textContent=(SYNC_TXT[Sy.state]||'未接続')+(Sy.prog?' '+Sy.prog:'');
 sdlast.textContent=on&&m.last?'最終 '+fmtTime(m.last):'';sdmsg.hidden=!Sy.msg;sdmsg.textContent=Sy.msg||'';
@@ -809,7 +827,7 @@ const tok=sMeta().tok;try{if(tok&&window.google&&google.accounts&&google.account
 clearTimeout(Sy.timer);setSMeta({on:false,tok:'',exp:0,last:0});setSync('off');toast('同期をやめたよ。カードはこの端末に残ってるよ')};
 sdclose.onclick=()=>syncdlg.close();sdbk.onclick=()=>doBackup();
 syncdlg.addEventListener('click',e=>{if(e.target!==syncdlg)return;const r=syncdlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)syncdlg.close()});// 外側（背景）をタップしたときだけ閉じる
-syncmi.onclick=openSyncDlg;
+syncmi.onclick=()=>{menu.classList.remove('on');if(Sy.state==='relogin'&&clientId())login();else openSyncDlg()};
 syncst.onclick=()=>{if(Sy.state==='relogin'&&clientId())login();else openSyncDlg()};// 再ログインはタップ1回で（ポップアップはタップからしか開けない）
 function syncInit(){const m=sMeta();if(clientId())loadGIS().then(()=>tokenClient()).catch(()=>{});
 if(!m.on)return setSync('off');if(!navigator.onLine)return setSync('offline');if(tokenOK())syncNow();else setSync('relogin')}
@@ -834,7 +852,7 @@ rbody.innerHTML=h}
 rbody.addEventListener('click',e=>{const cd=e.target.closest('.rcard');if(!cd)return;const c=cards.find(x=>x.id===cd.closest('.rc').dataset.id);if(c)openFull(c)});
 function openRecs(){menu.classList.remove('on');renderRecs();recs.classList.add('on');recs.scrollTop=0}
 function closeRecs(){recs.classList.remove('on')}
-recbtn.onclick=openRecs;recmi.onclick=openRecs;rclose.onclick=closeRecs;
+rclose.onclick=closeRecs;
 
 // ===== v11b: カードの画像を端末に保存（スマホは共有シート→「画像を保存」、PCはダウンロード） =====
 const IMG_EXT={'image/jpeg':'jpg','image/jpg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif','image/heic':'heic','image/heif':'heif','image/avif':'avif','image/svg+xml':'svg','image/bmp':'bmp'};
