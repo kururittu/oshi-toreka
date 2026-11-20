@@ -239,6 +239,11 @@ input.sw:checked{background:var(--pink)}input.sw:checked::after{transform:transl
 #cropst{flex:1;position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;margin-top:var(--st)}
 #cimg{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;-webkit-user-drag:none;pointer-events:none}
 #cframe{position:absolute;border-radius:9%/6.4%;box-shadow:0 0 0 9999px rgba(20,20,22,.62);outline:1.5px solid rgba(255,255,255,.9);pointer-events:none}
+/* v15: 四隅で合わせる（台形のゆがみ直し） */
+#cmode{flex:none;margin:12px auto 0;width:min(300px,calc(100% - 32px));background:rgba(255,255,255,.1)}
+#cmode button{color:rgba(255,255,255,.72)}#cmode button[aria-checked="true"]{background:rgba(255,255,255,.24);color:#fff}
+#cquad{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+#cloupe{position:absolute;left:0;top:0;width:112px;height:112px;border-radius:50%;box-shadow:0 0 0 2px #fff,0 6px 20px rgba(0,0,0,.45);pointer-events:none;background:#141416}
 .cbtns{display:flex;gap:10px;justify-content:center;padding:14px 16px calc(var(--sb) + 18px)}
 .cbtns .pill{min-width:130px;height:50px}.cbtns .pill:not(.pri){background:rgba(255,255,255,.12);color:#fff}.cbtns .pill.pri{background:#fff;color:var(--ink)}
 
@@ -426,7 +431,8 @@ header .countrow .syncst,header .countrow .recchip{margin-top:0}
 <label>キラキラの種類</label><div class="fxsel"><select name="fx" id="fxs"></select><div class="fxsw" id="fxsw"><div class="face front"><div class="base"></div><div class="holo"></div><div class="glit"></div><div class="shine"></div></div></div></div>
 <div class="fbtns"><button value="cancel" class="pill" formnovalidate>キャンセル</button><button value="ok" class="pill pri" id="okb">保存</button></div>
 </form></dialog>
-<dialog id="crop" aria-label="トリミング"><div id="cropst"><img id="cimg" alt="" draggable="false"><div id="cframe"></div></div>
+<dialog id="crop" aria-label="トリミング"><div id="cropst"><img id="cimg" alt="" draggable="false"><div id="cframe"></div><svg id="cquad" style="display:none" aria-hidden="true"></svg><canvas id="cloupe" hidden></canvas></div>
+<div class="seg cmode" id="cmode" role="radiogroup" aria-label="合わせかた"><button type="button" data-v="" aria-checked="true">切り抜き</button><button type="button" data-v="quad" aria-checked="false">四隅で合わせる</button></div>
 <div class="cbtns"><button type="button" class="pill" id="cropno">キャンセル</button><button type="button" class="pill pri" id="cropok">決定</button></div></dialog>
 <dialog id="syncdlg" aria-label="Googleドライブ同期"><div class="fstart" tabindex="-1" autofocus></div>
 <div class="sd-h"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.5 9.6 4.5 4.5 0 0 0 7 18.5z"/><path d="M9.5 13.5l2 2 3.5-3.8"/></svg>Googleドライブ同期</div>
@@ -525,27 +531,73 @@ function flash(c){const s=grid.querySelector(`.slot[data-id="${c.id}"]`);if(!s)r
 // ===== トリミング（カードと同じ縦横比の枠。1本指で移動・2本指/ホイールで拡大） =====
 const CA=88/63,CR={p:new Map()};
 function cropImage(src){return new Promise((res,rej)=>{const im=new Image();im.decoding='async';
-im.onload=()=>{if(!im.naturalWidth||!im.naturalHeight)return rej({msg:'この画像は読み込めませんでした（別の写真で試してね）'});CR.im=im;CR.res=res;cimg.src=src;if(!crop.open)crop.showModal();CR.tries=0;requestAnimationFrame(cropLayout)};
+im.onload=()=>{if(!im.naturalWidth||!im.naturalHeight)return rej({msg:'この画像は読み込めませんでした（別の写真で試してね）'});CR.im=im;CR.res=res;CR.q=null;cimg.src=src;if(!crop.open)crop.showModal();CR.tries=0;requestAnimationFrame(cropLayout)};
 im.onerror=()=>rej({msg:'この画像は読み込めませんでした（HEICなどは「写真」アプリから選ぶか、スクショで試してね）'});im.src=src})}
 function cropLayout(){const st=cropst.getBoundingClientRect(),iw=CR.im.naturalWidth,ih=CR.im.naturalHeight;if((st.width<10||st.height<10)&&CR.tries++<30)return requestAnimationFrame(cropLayout);// まだ画面に出ていなければ次のフレームで
 const fw=Math.min(st.width*.84,st.height*.9/CA),fh=fw*CA,fx=(st.width-fw)/2,fy=(st.height-fh)/2;Object.assign(CR,{fw,fh,fx,fy,iw,ih,smin:Math.max(fw/iw,fh/ih)});
 Object.assign(cframe.style,{left:fx+'px',top:fy+'px',width:fw+'px',height:fh+'px'});cimg.style.width=iw+'px';cimg.style.height=ih+'px';
-CR.s=CR.smin;CR.x=fx+(fw-iw*CR.s)/2;CR.y=fy+(fh-ih*CR.s)/2;cropApply()}
+CR.s=CR.smin;CR.x=fx+(fw-iw*CR.s)/2;CR.y=fy+(fh-ih*CR.s)/2;cropApply();quadLayout()}
 function cropApply(){const {fw,fh,fx,fy,iw,ih}=CR;CR.s=clamp(CR.s,CR.smin,CR.smin*8);CR.x=clamp(CR.x,fx+fw-iw*CR.s,fx);CR.y=clamp(CR.y,fy+fh-ih*CR.s,fy);
 cimg.style.transform=`translate(${CR.x.toFixed(2)}px,${CR.y.toFixed(2)}px) scale(${CR.s.toFixed(5)})`}
 function cropZoom(k,mx,my){const s0=CR.s,s1=clamp(s0*k,CR.smin,CR.smin*8),r=s1/s0;CR.x=mx-(mx-CR.x)*r;CR.y=my-(my-CR.y)*r;CR.s=s1;cropApply()}
 const cpt=e=>{const r=cropst.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}};
 const cmid=()=>{const v=[...CR.p.values()];return v.length<2?v[0]:{x:(v[0].x+v[1].x)/2,y:(v[0].y+v[1].y)/2,d:Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)}};
-cropst.addEventListener('pointerdown',e=>{e.preventDefault();try{cropst.setPointerCapture(e.pointerId)}catch(_){}CR.p.set(e.pointerId,cpt(e))});
-cropst.addEventListener('pointermove',e=>{if(!CR.p.has(e.pointerId))return;const a=cmid();CR.p.set(e.pointerId,cpt(e));const b=cmid();
+cropst.addEventListener('pointerdown',e=>{e.preventDefault();try{cropst.setPointerCapture(e.pointerId)}catch(_){}if(CR.mode==='quad')return quadDown(e);CR.p.set(e.pointerId,cpt(e))});
+cropst.addEventListener('pointermove',e=>{if(CR.mode==='quad')return quadMove(e);if(!CR.p.has(e.pointerId))return;const a=cmid();CR.p.set(e.pointerId,cpt(e));const b=cmid();
 if(CR.p.size>=2&&a.d){CR.x+=b.x-a.x;CR.y+=b.y-a.y;cropZoom(b.d/a.d,b.x,b.y)}else{CR.x+=b.x-a.x;CR.y+=b.y-a.y;cropApply()}});
-const cup=e=>CR.p.delete(e.pointerId);cropst.addEventListener('pointerup',cup);cropst.addEventListener('pointercancel',cup);
-cropst.addEventListener('wheel',e=>{e.preventDefault();const p=cpt(e);cropZoom(Math.exp(-e.deltaY*.0015),p.x,p.y)},{passive:false});
-function cropDone(v){CR.p.clear();crop.close();const r=CR.res;CR.res=null;if(r)r(v)}
+const cup=e=>{CR.p.delete(e.pointerId);quadUp(e)};cropst.addEventListener('pointerup',cup);cropst.addEventListener('pointercancel',cup);
+cropst.addEventListener('wheel',e=>{e.preventDefault();if(CR.mode==='quad')return;const p=cpt(e);cropZoom(Math.exp(-e.deltaY*.0015),p.x,p.y)},{passive:false});
+function cropDone(v){CR.p.clear();CR.drag=null;cloupe.hidden=true;crop.close();const r=CR.res;CR.res=null;if(r)r(v)}
 cropno.onclick=()=>cropDone(null);crop.addEventListener('cancel',e=>{e.preventDefault();cropDone(null)});
-cropok.onclick=()=>{const {fw,fh,fx,fy,s,x,y}=CR,sw=fw/s,sh=fh/s,oh=Math.round(Math.min(1000,sh)),ow=Math.round(oh/CA);// 長い辺 最大1000px・JPEG 0.9
+cropok.onclick=()=>{if(CR.mode==='quad')return quadOk();const {fw,fh,fx,fy,s,x,y}=CR,sw=fw/s,sh=fh/s,oh=Math.round(Math.min(1000,sh)),ow=Math.round(oh/CA);// 長い辺 最大1000px・JPEG 0.9
 let out=null;try{const cv=document.createElement('canvas');cv.width=Math.max(1,ow);cv.height=Math.max(1,oh);const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,cv.width,cv.height);g.imageSmoothingQuality='high';g.drawImage(CR.im,(fx-x)/s,(fy-y)/s,sw,sh,0,0,cv.width,cv.height);out=cv.toDataURL('image/jpeg',.9);cv.width=cv.height=0}catch(e){out=null}// 使い終わったキャンバスはすぐ解放（iPhoneのメモリ対策）
 if(!out||out.length<100){toast('画像を作れませんでした（もう一度ためしてね）');return}cropDone(out)};
+// ===== 四隅で合わせる：カードの四隅をドラッグ → まっすぐな長方形に（端末の中だけで計算） =====
+function setCmode(v){CR.mode=v;cmode.querySelectorAll('button').forEach(b=>b.setAttribute('aria-checked',b.dataset.v===v));if(CR.im)cropLayout()}
+cmode.onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.v!==(CR.mode||''))setCmode(b.dataset.v)};
+function quadLayout(){const on=CR.mode==='quad';cframe.hidden=on;cquad.style.display=on?'block':'none';if(!on){cloupe.hidden=true;return}
+const st=cropst.getBoundingClientRect(),{iw,ih}=CR,pad=30,s=Math.min((st.width-pad*2)/iw,(st.height-pad*2)/ih);
+Object.assign(CR,{qs:s,qx:(st.width-iw*s)/2,qy:(st.height-ih*s)/2,sw:st.width,sh:st.height});
+cimg.style.transform=`translate(${CR.qx.toFixed(2)}px,${CR.qy.toFixed(2)}px) scale(${s.toFixed(5)})`;
+if(!CR.q){const dx=iw*.08,dy=ih*.08;CR.q=[[dx,dy],[iw-dx,dy],[iw-dx,ih-dy],[dx,ih-dy]]}// 左上・右上・右下・左下（端から8%内側）
+quadDraw()}
+const q2s=p=>[CR.qx+p[0]*CR.qs,CR.qy+p[1]*CR.qs];
+function quadDraw(){const P=CR.q.map(q2s),pt=P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)),W=CR.sw,H=CR.sh;
+cquad.setAttribute('viewBox',`0 0 ${W} ${H}`);
+cquad.innerHTML=`<path d="M-9999 -9999H${W+9999}V${H+9999}H-9999Z M${pt.join('L')}Z" fill="rgba(20,20,22,.6)" fill-rule="evenodd"/><path d="M${pt.join('L')}Z" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>`+
+P.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${CR.drag&&CR.drag.i===i?14:12}" fill="rgba(255,255,255,.25)" stroke="#fff" stroke-width="2.5"/>`).join('')}
+function quadDown(e){const m=cpt(e);let bi=-1,bd=1e9;CR.q.map(q2s).forEach((p,i)=>{const d=Math.hypot(p[0]-m.x,p[1]-m.y);if(d<bd){bd=d;bi=i}});
+if(bd>(e.pointerType==='mouse'?28:44))return;const p=q2s(CR.q[bi]);CR.drag={id:e.pointerId,i:bi,ox:p[0]-m.x,oy:p[1]-m.y};quadDraw();quadLoupe()}// 指の太さぶん広めに当たり判定。つかんだ位置のずれは保つ
+function quadMove(e){const d=CR.drag;if(!d||d.id!==e.pointerId)return;const m=cpt(e);
+CR.q[d.i]=[clamp((m.x+d.ox-CR.qx)/CR.qs,0,CR.iw),clamp((m.y+d.oy-CR.qy)/CR.qs,0,CR.ih)];quadDraw();quadLoupe()}
+function quadUp(e){if(CR.drag&&CR.drag.id===e.pointerId){CR.drag=null;cloupe.hidden=true;if(CR.mode==='quad')quadDraw()}}
+function quadLoupe(){const d=CR.drag;if(!d)return;const L=112,r=window.devicePixelRatio||1,p=CR.q[d.i],sp=q2s(p);// 指の上に拡大鏡（上が足りなければ下）
+if(cloupe.width!==L*r){cloupe.width=cloupe.height=L*r}const g=cloupe.getContext('2d'),z=CR.qs*3;g.setTransform(r,0,0,r,0,0);g.fillStyle='#141416';g.fillRect(0,0,L,L);
+g.imageSmoothingQuality='high';g.drawImage(CR.im,p[0]-L/2/z,p[1]-L/2/z,L/z,L/z,0,0,L,L);
+const P=CR.q.map(q=>[(q[0]-p[0])*z+L/2,(q[1]-p[1])*z+L/2]);g.strokeStyle='rgba(255,255,255,.9)';g.lineWidth=1.5;g.beginPath();P.forEach((q,i)=>i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.stroke();
+g.strokeStyle='#ff4f8b';g.lineWidth=1.5;g.beginPath();g.moveTo(L/2-9,L/2);g.lineTo(L/2+9,L/2);g.moveTo(L/2,L/2-9);g.lineTo(L/2,L/2+9);g.stroke();
+let x=sp[0]-L/2,y=sp[1]-L-46;if(y<6)y=sp[1]+46;x=clamp(x,6,CR.sw-L-6);cloupe.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;cloupe.hidden=false}
+function quadConvex(q){let sg=0;for(let i=0;i<4;i++){const a=q[i],b=q[(i+1)%4],c=q[(i+2)%4],z=(b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]);if(Math.abs(z)<1e-6)return false;const t=Math.sign(z);if(sg&&t!==sg)return false;sg=t}return true}
+// 単位正方形 → 四角形 の射影変換（ホモグラフィ）
+function quadH(q){const [[x0,y0],[x1,y1],[x2,y2],[x3,y3]]=q,dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3;let g=0,h=0;
+if(Math.abs(dx3)>1e-9||Math.abs(dy3)>1e-9){const den=dx1*dy2-dx2*dy1;g=(dx3*dy2-dx2*dy3)/den;h=(dx1*dy3-dx3*dy1)/den}
+return [x1-x0+g*x1,x3-x0+h*x3,x0,y1-y0+g*y1,y3-y0+h*y3,y0,g,h]}
+// 四角形 q（画像の px）を ow×oh の長方形に。逆向きに1画素ずつ元画像を引いて、まわり4画素で補間（バイリニア）
+function warpQuad(im,q,ow,oh){const xs=q.map(p=>p[0]),ys=q.map(p=>p[1]),iw=im.naturalWidth||im.width,ih=im.naturalHeight||im.height;
+const bx=Math.max(0,Math.floor(Math.min(...xs))),by=Math.max(0,Math.floor(Math.min(...ys))),bw=Math.min(iw,Math.ceil(Math.max(...xs)))-bx,bh=Math.min(ih,Math.ceil(Math.max(...ys)))-by;
+const k=Math.min(1,2*Math.max(ow,oh)/Math.max(bw,bh,1)),sw=Math.max(1,Math.round(bw*k)),sh=Math.max(1,Math.round(bh*k));// 大きい写真は先に縮めてメモリ節約
+const sc=document.createElement('canvas');sc.width=sw;sc.height=sh;const sg=sc.getContext('2d');sg.imageSmoothingQuality='high';sg.drawImage(im,bx,by,bw,bh,0,0,sw,sh);
+const S=sg.getImageData(0,0,sw,sh).data;sc.width=sc.height=0;
+const [a,b,c,d,e,f,g,h]=quadH(q.map(p=>[(p[0]-bx)*sw/bw,(p[1]-by)*sh/bh])),cv=document.createElement('canvas');cv.width=ow;cv.height=oh;const og=cv.getContext('2d'),O=og.createImageData(ow,oh),D=O.data;
+for(let j=0;j<oh;j++){const v=(j+.5)/oh;for(let i=0;i<ow;i++){const u=(i+.5)/ow,w=g*u+h*v+1;let x=(a*u+b*v+c)/w-.5,y=(d*u+e*v+f)/w-.5;
+x=x<0?0:x>sw-1?sw-1:x;y=y<0?0:y>sh-1?sh-1:y;const x0=x|0,y0=y|0,x1=x0<sw-1?x0+1:x0,y1=y0<sh-1?y0+1:y0,fx=x-x0,fy=y-y0;
+const p00=(y0*sw+x0)*4,p10=(y0*sw+x1)*4,p01=(y1*sw+x0)*4,p11=(y1*sw+x1)*4,o=(j*ow+i)*4;
+for(let ch=0;ch<3;ch++){const t=S[p00+ch]+(S[p10+ch]-S[p00+ch])*fx,bt=S[p01+ch]+(S[p11+ch]-S[p01+ch])*fx;D[o+ch]=t+(bt-t)*fy}D[o+3]=255}}
+og.putImageData(O,0,0);return cv}
+function quadOk(){const q=CR.q;if(!q||!quadConvex(q)){toast('四隅の位置を見直してね');return}
+const L=(m,n)=>Math.hypot(q[m][0]-q[n][0],q[m][1]-q[n][1]),hE=Math.max(L(0,3),L(1,2)),wE=Math.max(L(0,1),L(3,2)),oh=Math.max(1,Math.round(Math.min(1000,Math.max(hE,wE*CA)))),ow=Math.max(1,Math.round(oh/CA));// 長い辺 最大1000px・JPEG 0.9（切り抜きと同じ）
+let out=null;try{const cv=warpQuad(CR.im,q,ow,oh);out=cv.toDataURL('image/jpeg',.9);cv.width=cv.height=0}catch(e){out=null}
+if(!out||out.length<100){toast('画像を作れませんでした（もう一度ためしてね）');return}cropDone(out)}
 // iPhone：2本指でページごと拡大されないように
 for(const t of ['touchmove','gesturestart','gesturechange'])cropst.addEventListener(t,e=>e.preventDefault(),{passive:false});
 // フォルダ（長押しで 名前を変える／削除。削除してもカードは消えず「フォルダなし」に）
