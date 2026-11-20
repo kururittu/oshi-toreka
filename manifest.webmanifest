@@ -1,6 +1,6 @@
 {
-  "name": "推しトレカアルバム",
-  "short_name": "推しトレカ",
+  "name": "推しポケ",
+  "short_name": "推しポケ",
   "description": "推しのトレカをこの端末に残すアルバム",
   "start_url": "./",
   "scope": "./",

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>推しトレカアルバム</title>
+<title>推しポケ</title>
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="推しトレカ">
+<meta name="apple-mobile-web-app-title" content="推しポケ">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -309,7 +309,7 @@ html{touch-action:manipulation}/* ダブルタップ拡大の判定で、ピン�
 #full .acts{gap:18px}
 </style></head><body>
 <header>
-<div class="toprow"><h1 class="logo" aria-label="推しトレカアルバム"><svg class="lmark" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><rect x="1" y="1" width="20" height="26" rx="5" fill="#ff4f86"/><path d="M11 18.6c-3.2-2.2-5-4-5-6a2.6 2.6 0 0 1 5-1 2.6 2.6 0 0 1 5 1c0 2-1.8 3.8-5 6z" fill="#fff"/></svg><span class="ltxt">推しトレカアルバム</span></h1>
+<div class="toprow"><h1 class="logo" aria-label="推しポケ"><svg class="lmark" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true"><rect x="1" y="1" width="20" height="26" rx="5" fill="#ff4f86"/><path d="M11 18.6c-3.2-2.2-5-4-5-6a2.6 2.6 0 0 1 5-1 2.6 2.6 0 0 1 5 1c0 2-1.8 3.8-5 6z" fill="#fff"/></svg><span class="ltxt">推しポケ</span></h1>
 <button class="iconbtn" id="menubtn" aria-label="メニュー"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button></div>
 <div class="countrow"><div class="count" id="count">0枚</div><button type="button" class="syncst" id="syncst" data-s="off" hidden aria-label="Googleドライブ同期の状態"><i class="dot"></i><span id="syncstt">未接続</span></button><button type="button" class="recchip" id="recbtn" aria-label="おすすめ"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3.5l1.9 5.1 5.1 1.9-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></svg>おすすめ</button></div>
 <div id="ftabs" role="tablist" aria-label="フォルダ" hidden></div>
@@ -602,7 +602,7 @@ function backupBlob(){return new Blob([JSON.stringify({app:'oshi-toreka',version
 function hideBkToast(){bktoast.classList.remove('on')}
 function markBackedUp(){setBkMeta({at:Date.now(),count:cards.length,snooze:0});hideBkToast()}
 async function doBackup(){menu.classList.remove('on');const blob=backupBlob(),name=backupName(),file=new File([blob],name,{type:'application/json'});
-try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'推しトレカのバックアップ',text:'推しトレカアルバムのバックアップ'});markBackedUp();return}}
+try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'推しポケのバックアップ',text:'推しポケのバックアップ'});markBackedUp();return}}
 catch(e){if(e&&e.name==='AbortError')return}
 const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);markBackedUp()}
 function shouldRemind(){if(cards.length<1)return false;const m=bkMeta(),now=Date.now();if(m.snooze&&now<m.snooze)return false;if(!m.at)return true;if(now-m.at>=7*24*60*60*1000)return true;if(cards.length>=(m.count||0)+5)return true;return false}
