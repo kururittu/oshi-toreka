@@ -643,7 +643,7 @@ layoutCar();P.raf=requestAnimationFrame(carLoop)}
 function carX(d){const a=Math.abs(d),sp=P.pw*.62;return Math.sign(d)*(a<=1?a*sp:sp+(a-1)*P.pw*.36)}
 function layoutCar(){const {W,H,pw,ph}=P,cy=H*.42;P.packs.forEach((pk,i)=>{const d=i-P.pos,a=Math.abs(d),s=.88*(1-Math.min(a,2.2)*.16),ry=clamp(-d*32,-58,58),op=a>2.4?Math.max(0,1-(a-2.4)*2):1;
 pk.style.transform=`translate(${(W/2+carX(d)-pw/2).toFixed(1)}px,${(cy-ph/2).toFixed(1)}px) perspective(900px) rotateY(${ry.toFixed(2)}deg) scale(${s.toFixed(4)})`;pk.style.opacity=op;pk.style.zIndex=100-Math.round(a*10);pk.classList.toggle('center',a<.5)});
-if(P.hint){const now=performance.now(),mv=P.phase!=='select'||P.drag&&P.pt&&P.pt.moved>=8||Math.abs(P.pos-Math.round(P.pos))>.12;if(mv||!P.still)P.still=mv?0:now;const off=mv||now-P.still<1800;P.hint.forEach(h=>h.classList.toggle('off',off))}// 動かしている間・開封中は隠す
+if(P.hint){const now=performance.now(),mv=P.phase!=='select'||P.drag&&P.pt&&P.pt.moved>=8||Math.abs(P.pos-Math.round(P.pos))>.12;if(mv||!P.still)P.still=mv?0:now;const off=mv||now-P.still<900;P.hint.forEach(h=>h.classList.toggle('off',off))}// 動かしている間・開封中は隠す
 P.navl.classList.toggle('off',P.tgt<=0);P.navr.classList.toggle('off',P.tgt>=NP-1)}
 function carLoop(t){if(!P||P.phase!=='select')return;const dt=P.lt?Math.min(.05,(t-P.lt)/1000):1/60;P.lt=t;
 if(!P.drag)for(let k=0;k<4;k++){const a=170*(P.tgt-P.pos)-21*P.v;P.v+=a*dt/4;P.pos+=P.v*dt/4}
